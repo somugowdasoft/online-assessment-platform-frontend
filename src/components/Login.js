@@ -16,12 +16,12 @@ const Login = () => {
         const formData = { email: email, password: password }
         e.preventDefault();
         try {
-            const response = await dispatch(login(formData));  // Correct usage of dispatch with await
+            const response = await dispatch(login(formData));  // Correct usage of dispatch with await            
             if (response) {
                 setTimeout(() => {
-                    if (response.role === 'student') {
+                    if (response?.user?.role === 'student') {
                         navigate('/student/dashboard');
-                    } else if (response.role === 'admin') {
+                    } else if (response?.user?.role === 'admin') {
                         navigate('/admin/dashboard');
                     }
                 }, 2000);

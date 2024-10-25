@@ -1,11 +1,15 @@
+import Header from "../components/Header";
+
 const StudentDashboard = () => {
-    return (
-      <div className="p-4">
-        <h1 className="text-3xl font-bold">Welcome to Student Dashboard</h1>
-        {/* You can add additional student-specific features here */}
-      </div>
-    );
-  };
-  
-  export default StudentDashboard;
-  
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      {/* Content goes here */}
+      <main className="flex-grow">
+        <h2>Student</h2>
+      </main>
+    </div>
+  );
+};
+
+export default StudentDashboard;
