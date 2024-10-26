@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { getProfile, updateProfile } from '../redux/actions/authActions';
 import { formatDateToInput } from "../utils/dateUtils";
@@ -19,22 +19,23 @@ const ProfileUpdate = () => {
     });
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        getUserProfile(user.id);
-    }, [dispatch]);
-
+    //get profile
     const getUserProfile = async (data) => {
         let id = data || user.id;
         try {
             // Dispatch the action
-            const response = await dispatch(getProfile(id));
+            await dispatch(getProfile(id));
         } catch (error) {
             console.error(error);
             toast.error('Failed to get profile');
         }
     };
+
+    useEffect(() => {
+        getUserProfile(user.id);
+    }, [dispatch, user.id, getUserProfile]);
 
 
     // Handle form submission

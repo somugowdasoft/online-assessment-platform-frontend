@@ -8,6 +8,8 @@ import Login from './components/Login';
 import StudentDashboard from './pages/StudentDashboard';
 import AdminDashboard from './pages/AdminDashboard'
 import ProfileUpdate from './components/ProfileUpdate';
+import ExamScheduling from './pages/ExamScheduling';
+import StudentsList from './pages/StudentsList';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -20,9 +22,13 @@ function App() {
         <Route path="/login" element= {<Login />} />
 
         <Route path="/student/dashboard" element={isAuthenticated && user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/login" />} >
-          <Route path="profile" element={<ProfileUpdate />} /></Route>
+          <Route path="profile" element={<ProfileUpdate />} />
+          </Route>
+
         <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >
           <Route path="profile" element={<ProfileUpdate />} />
+          <Route path="exam-scheduling" element={<ExamScheduling />} />
+          <Route path="students" element={<StudentsList />} />
         </Route>
       </Routes>
     </Router>

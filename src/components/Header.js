@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 import { logout } from '../redux/actions/authActions';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -30,7 +30,7 @@ const Header = (props) => {
         setDropdownOpen(false);
     };
 
-    const loggedInUser = user?.name; // Replace with your actual logic to get the current user
+  
 
     // Extract initials from the logged-in user's name
     const getInitials = (name) => {
@@ -40,6 +40,7 @@ const Header = (props) => {
 
     //useEffect
     useEffect(() => {
+        const loggedInUser = user?.name; // Replace with your actual logic to get the current user
         const initials = getInitials(loggedInUser);
         setUserName(initials);
     }, [user])

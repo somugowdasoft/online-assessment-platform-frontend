@@ -8,30 +8,28 @@ const AdminDashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="min-h-screen grid grid-rows-layout">
-
+    <div className="flex flex-col h-screen">
       {/* Header */}
       <Header
         isOpen={isOpen}
         toggle={() => setIsOpen(!isOpen)}
       />
 
-      {/* Main content with Sidebar and Main using flex */}
-      <div className="flex flex-col lg:flex-row gap-4">
+      <div className="flex flex-1">
+        {/* Middle Sidebar */}
         <Sidebar isOpen={isOpen} />
 
-        {/* Main content */}
-        <main
-          className={`bg-white p-4 flex-grow ${isOpen ? '' : 'w-full'}`}
-          style={{ marginLeft: isOpen ? '150px' : '0' }}
-        >
+        {/* Main Content */}
+        <main className="flex-1 p-4">
           <Outlet />
         </main>
       </div>
 
+
       {/* Footer */}
       <Footer />
     </div>
+
   );
 };
 
