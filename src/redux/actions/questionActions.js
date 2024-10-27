@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ErrorHandler from '../../components/ErrorHandler';
 
 import { CREATE_QUESTION, DELETE_QUESTION, GET_QUESTIONS, UPDATE_QUESTION } from '../../constants/questions';
 
@@ -34,17 +35,7 @@ export const createQuestion = (questionData) => async (dispatch) => {
         toast.success('Question created successfully!');
     } catch (error) {
         toast.error(`Error creating question: ${error.response?.data?.message || error.message}`);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
 
@@ -55,17 +46,7 @@ export const getQuestions = () => async (dispatch) => {
         dispatch({ type: GET_QUESTIONS, payload: response.data });
     } catch (error) {
         toast.error(`Error fetching questions: ${error.response?.data?.message || error.message}`);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
 
@@ -77,17 +58,7 @@ export const updateQuestion = (id, questionData) => async (dispatch) => {
         toast.success('Question updated successfully!');
     } catch (error) {
         toast.error(`Error updating question: ${error.response?.data?.message || error.message}`);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
 
@@ -99,16 +70,6 @@ export const deleteQuestion = (id) => async (dispatch) => {
         toast.success('Question deleted successfully!');
     } catch (error) {
         toast.error(`Error deleting question: ${error.response?.data?.message || error.message}`);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };

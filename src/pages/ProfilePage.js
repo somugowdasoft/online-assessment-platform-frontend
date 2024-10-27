@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { getProfile, updateProfile } from '../redux/actions/authActions';
 import { formatDateToInput } from "../utils/dateUtils";
+import { useNavigate } from 'react-router-dom';
 
 const ProfileUpdate = () => {
     const { user, userData } = useSelector((state) => state.auth);
@@ -19,6 +20,7 @@ const ProfileUpdate = () => {
     });
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const hasFetchedProfile = useRef(false);
     // const navigate = useNavigate();
 

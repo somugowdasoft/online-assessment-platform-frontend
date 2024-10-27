@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ErrorHandler from '../../components/ErrorHandler';
 
 // Base configuration for Axios
 const API = axios.create({
@@ -34,17 +35,7 @@ export const register = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'REGISTER_FAIL', payload: error.response });
     toast.error(error.response?.error.message);
-    // Check for network errors
-    if (!error.response) {
-      // Network error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else if (error.response.status >= 500) {
-      // Server error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else {
-      // Handle other errors (e.g., validation errors)
-      throw new Error(error.response.data.message || "An error occurred");
-    }
+    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
   }
 };
 
@@ -61,17 +52,7 @@ export const login = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'LOGIN_FAIL', payload: error.response.data });
     toast.error(error);
-    // Check for network errors
-    if (!error.response) {
-      // Network error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else if (error.response.status >= 500) {
-      // Server error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else {
-      // Handle other errors (e.g., validation errors)
-      throw new Error(error.response.data.message || "An error occurred");
-    }
+    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
   }
 };
 
@@ -93,17 +74,7 @@ export const getProfile = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'PROFILE_GET_FAIL', payload: error.response });
     toast.error(error.response?.error);
-    // Check for network errors
-    if (!error.response) {
-      // Network error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else if (error.response.status >= 500) {
-      // Server error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else {
-      // Handle other errors (e.g., validation errors)
-      throw new Error(error.response.data.message || "An error occurred");
-    }
+    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
   }
 };
 
@@ -121,16 +92,6 @@ export const updateProfile = (userData) => async (dispatch) => {
       payload: error.response ? error.response.data : error.message,
     });
     toast.error(errorMessage);
-    // Check for network errors
-    if (!error.response) {
-      // Network error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else if (error.response.status >= 500) {
-      // Server error
-      navigate('/error'); // Navigate to the ErrorPage
-    } else {
-      // Handle other errors (e.g., validation errors)
-      throw new Error(error.response.data.message || "An error occurred");
-    }
+    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
   }
 };

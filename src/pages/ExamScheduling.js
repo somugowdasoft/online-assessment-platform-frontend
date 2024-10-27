@@ -4,9 +4,11 @@ import { createExam, deleteExam, getExams, updateExam } from '../redux/actions/e
 import { ToastContainer } from 'react-toastify';
 import { formatDateToInput } from '../utils/dateUtils';
 import ExamTable from '../components/ExamTable';
+import { useNavigate } from 'react-router-dom';
 
 const ExamScheduling = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const hasFetchedExams = useRef(false);
 
     const { exams } = useSelector(state => state.exams);

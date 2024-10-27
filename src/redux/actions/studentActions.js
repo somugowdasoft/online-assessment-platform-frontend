@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ErrorHandler from '../../components/ErrorHandler';
 
 // Base configuration for Axios
 const API = axios.create({
@@ -30,17 +31,7 @@ export const getAllStudents = () => async (dispatch) => {
         dispatch({ type: 'GET_ALL_STUDENTS', payload: data });
     } catch (error) {
         console.error(error);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
 
@@ -51,17 +42,7 @@ export const deleteStudent = (id) => async (dispatch) => {
         dispatch({ type: 'DELETE_STUDENT', payload: id });
     } catch (error) {
         console.error(error);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
 
@@ -71,16 +52,6 @@ export const updateExamPermission = (id, permission) => async (dispatch) => {
         dispatch({ type: 'UPDATE_EXAM_PERMISSION', payload: { id, permission } });
     } catch (error) {
         console.error(error);
-        // Check for network errors
-        if (!error.response) {
-            // Network error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else if (error.response.status >= 500) {
-            // Server error
-            navigate('/error'); // Navigate to the ErrorPage
-        } else {
-            // Handle other errors (e.g., validation errors)
-            throw new Error(error.response.data.message || "An error occurred");
-        }
+        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
     }
 };
