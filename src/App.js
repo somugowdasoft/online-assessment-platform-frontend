@@ -13,32 +13,39 @@ import StudentsList from './pages/StudentsList';
 import QuestionBank from './pages/QuestionBank';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import ErrorPage from './components/ErrorPage';
+import TermsOfService from './components/footer/TermsOfService';
+import PrivacyPolicy from './components/footer/PrivacyPolicy';
+import About from './components/footer/About ';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   return (
     <Router>
-        <Routes>
-          <Route path="/" element={isAuthenticated ? <Navigate to={`/${user?.role}/dashboard`} /> : <Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+      <Routes>
+        <Route path="/" element={isAuthenticated ? <Navigate to={`/${user?.role}/dashboard`} /> : <Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
-          <Route path="/student/dashboard" element={isAuthenticated && user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/login" />} >
-            <Route path="profile" element={<ProfileUpdate />} />
-          </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
 
-          <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >
-            <Route path="" element={<AdminDashboardPage />} />
-            <Route path="profile" element={<ProfileUpdate />} />
-            <Route path="exams" element={<ExamScheduling />} />
-            <Route path="questions" element={<QuestionBank />} />
-            <Route path="students" element={<StudentsList />} />
-          </Route>
+        <Route path="/student/dashboard" element={isAuthenticated && user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/login" />} >
+          <Route path="profile" element={<ProfileUpdate />} />
+        </Route>
 
-          {/* Add the ErrorPage route */}
-          <Route path="/error" element={<ErrorPage />} />
-        </Routes>
+        <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >
+          <Route path="" element={<AdminDashboardPage />} />
+          <Route path="profile" element={<ProfileUpdate />} />
+          <Route path="exams" element={<ExamScheduling />} />
+          <Route path="questions" element={<QuestionBank />} />
+          <Route path="students" element={<StudentsList />} />
+        </Route>
+
+        {/* Add the ErrorPage route */}
+        <Route path="/error" element={<ErrorPage />} />
+      </Routes>
     </Router>
 
   );
