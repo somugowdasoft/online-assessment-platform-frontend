@@ -8,7 +8,7 @@ import ExamTable from '../components/ExamTable';
 const ExamScheduling = () => {
     const dispatch = useDispatch();
     const { exams } = useSelector(state => state.exams);
-    const [examData, setExamData] = useState({ name: '', date: '', duration: '', level: 'easy', totalMarks: '', totalQuestions: "", description: "" });
+    const [examData, setExamData] = useState({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [examId, setExamID] = useState("");
 
@@ -46,7 +46,7 @@ const ExamScheduling = () => {
             dispatch(getExams());
         }
         setIsLoading(false);
-        setExamData({ name: '', date: '', duration: '', level: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
+        setExamData({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
     }
 
     const handleSubmit = async (e) => {
@@ -59,14 +59,14 @@ const ExamScheduling = () => {
             } else {
                 response = await dispatch(createExam(examData));
             }
-            
+
             //get exam list
             if (response) {
                 dispatch(getExams());
             }
             setIsLoading(false);
             setExamID("");
-            setExamData({ name: '', date: '', duration: '', level: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
+            setExamData({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
         } catch (error) {
             console.log(error);
         }
@@ -100,32 +100,6 @@ const ExamScheduling = () => {
                     />
                 </div>
 
-                {/* Row for Duration and Level */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-1/2 lg:w-1/2">
-                    <input
-                        type="number"
-                        name="duration"
-                        placeholder="Duration (minutes)"
-                        value={examData.duration}
-                        onChange={handleChange}
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                        required
-                    />
-                    <select
-                        name="level"
-                        id="examLevel"
-                        value={examData.level}
-                        onChange={handleChange}
-                        required
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                    >
-                        <option value="">Select Level</option>
-                        <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
-                </div>
-
                 {/* Row for Total Marks and Total Questions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-1/2 lg:w-1/2">
                     <input
@@ -149,6 +123,17 @@ const ExamScheduling = () => {
                         className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
                     />
                 </div>
+
+                {/* Row for Duration */}
+                <input
+                    type="number"
+                    name="duration"
+                    placeholder="Duration (minutes)"
+                    value={examData.duration}
+                    onChange={handleChange}
+                    className="border-2 border-blue-500 rounded w-full md:w-1/2 lg:w-1/2 focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-12 resize-none"
+                    required
+                />
 
                 {/* Description Textarea */}
                 <textarea

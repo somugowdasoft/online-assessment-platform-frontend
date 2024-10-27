@@ -16,7 +16,6 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
                                         <th className="px-4 py-2 truncate border">Exam Name</th>
                                         <th className="px-4 py-2 border">Date</th>
                                         <th className="px-4 py-2 truncate border">Duration (min)</th>
-                                        <th className="px-4 py-2 border">Level</th>
                                         <th className="px-4 py-2 truncate border">Total Marks</th>
                                         <th className="px-4 py-2 truncate border">Total Questions</th>
                                         <th className="px-4 py-2 truncate border">Description</th>
@@ -31,7 +30,6 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
                                                 {new Date(exam.date).toLocaleDateString()}
                                             </td>
                                             <td className="px-4 py-2 border text-center">{exam.duration}</td>
-                                            <td className="px-4 py-2 border text-center">{exam.level}</td>
                                             <td className="px-4 py-2 border text-center">{exam.totalMarks}</td>
                                             <td className="px-4 py-2 border text-center">{exam.totalQuestions}</td>
                                             <td className="px-4 py-2 border truncate text-center">{exam.description}</td>
