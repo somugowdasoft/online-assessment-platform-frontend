@@ -75,7 +75,7 @@ const Header = (props) => {
                     className="flex items-center justify-evenly"
                 >
                     <span className='mr-4 cursor-pointer hover:text-lg'><FaBell /></span>
-                    <span className='mr-2'>{(user.name).toUpperCase()}</span>
+                    <span className='mr-2'> {"Hi,  " + user.name.toUpperCase()}</span>
                     <span
                         className="flex items-center justify-center w-6 h-6 bg-white font-bold text-black rounded-full"
                     > {userName}</span>

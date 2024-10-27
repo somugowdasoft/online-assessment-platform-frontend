@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getProfile, updateProfile } from '../redux/actions/authActions';
 import { formatDateToInput } from "../utils/dateUtils";
 import { useNavigate } from 'react-router-dom';
+import ErrorHandler from '../components/ErrorHandler';
 
 const ProfileUpdate = () => {
     const { user, userData } = useSelector((state) => state.auth);
@@ -33,17 +34,7 @@ const ProfileUpdate = () => {
         } catch (error) {
             console.error(error);
             toast.error('Failed to get profile');
-            // Check for network errors
-            if (!error.response) {
-                // Network error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else if (error.response.status >= 500) {
-                // Server error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else {
-                // Handle other errors (e.g., validation errors)
-                throw new Error(error.response.data.message || "An error occurred");
-            }
+            <ErrorHandler error={error} />
         }
     };
 
@@ -67,17 +58,7 @@ const ProfileUpdate = () => {
         } catch (error) {
             console.error('Error updating profile:', error);
             toast.error('Failed to update profile');
-            // Check for network errors
-            if (!error.response) {
-                // Network error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else if (error.response.status >= 500) {
-                // Server error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else {
-                // Handle other errors (e.g., validation errors)
-                throw new Error(error.response.data.message || "An error occurred");
-            }
+            <ErrorHandler error={error} />
         }
     };
 

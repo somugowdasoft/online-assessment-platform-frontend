@@ -43,7 +43,7 @@ export const createExam = (examData) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: CREATE_EXAM_FAIL, payload: error.response?.data?.message });
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -56,7 +56,7 @@ export const getExams = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: GET_EXAM_FAIL, payload: error?.response });
     toast.error(error);
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -70,7 +70,7 @@ export const updateExam = (id, examData) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: EDIT_EXAM_FAILURE, payload: error.message || 'Failed to delete the exam' });
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -85,6 +85,6 @@ export const deleteExam = (id) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: DELETE_EXAM_FAIL, payload: error.message || 'Failed to delete the exam' });
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };

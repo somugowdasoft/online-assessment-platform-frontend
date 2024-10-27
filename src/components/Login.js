@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { login } from '../redux/actions/authActions';
+import ErrorHandler from '../components/ErrorHandler';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -29,17 +30,7 @@ const Login = () => {
         } catch (error) {
             console.error("Login failed", error);
             toast.error("Login failed, please try again.");
-            // Check for network errors
-            if (!error.response) {
-                // Network error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else if (error.response.status >= 500) {
-                // Server error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else {
-                // Handle other errors (e.g., validation errors)
-                throw new Error(error.response.data.message || "An error occurred");
-            }
+            <ErrorHandler error={error} />
         }
     };
 

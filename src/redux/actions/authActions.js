@@ -33,9 +33,10 @@ export const register = (userData) => async (dispatch) => {
     dispatch({ type: 'REGISTER_SUCCESS', payload: response.data });
     return response;
   } catch (error) {
+    toast.error(error?.response?.data.error);
+    console.log(error);
     dispatch({ type: 'REGISTER_FAIL', payload: error.response });
-    toast.error(error.response?.error.message);
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -52,7 +53,7 @@ export const login = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'LOGIN_FAIL', payload: error.response.data });
     toast.error(error);
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -74,7 +75,7 @@ export const getProfile = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: 'PROFILE_GET_FAIL', payload: error.response });
     toast.error(error.response?.error);
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };
 
@@ -92,6 +93,6 @@ export const updateProfile = (userData) => async (dispatch) => {
       payload: error.response ? error.response.data : error.message,
     });
     toast.error(errorMessage);
-    {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+    <ErrorHandler error={error} />
   }
 };

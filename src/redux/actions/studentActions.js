@@ -31,7 +31,7 @@ export const getAllStudents = () => async (dispatch) => {
         dispatch({ type: 'GET_ALL_STUDENTS', payload: data });
     } catch (error) {
         console.error(error);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
 
@@ -42,7 +42,7 @@ export const deleteStudent = (id) => async (dispatch) => {
         dispatch({ type: 'DELETE_STUDENT', payload: id });
     } catch (error) {
         console.error(error);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
 
@@ -52,6 +52,6 @@ export const updateExamPermission = (id, permission) => async (dispatch) => {
         dispatch({ type: 'UPDATE_EXAM_PERMISSION', payload: { id, permission } });
     } catch (error) {
         console.error(error);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };

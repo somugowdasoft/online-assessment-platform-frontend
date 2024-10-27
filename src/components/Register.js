@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { register } from '../redux/actions/authActions';
 import { ToastContainer, toast } from 'react-toastify';
-
+import ErrorHandler from '../components/ErrorHandler';
 import { useDispatch } from 'react-redux';
 
 const Register = () => {
@@ -23,18 +23,8 @@ const Register = () => {
             }
         } catch (error) {
             console.error(error);
-            toast.error(error)
-            // Check for network errors
-            if (!error.response) {
-                // Network error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else if (error.response.status >= 500) {
-                // Server error
-                navigate('/error'); // Navigate to the ErrorPage
-            } else {
-                // Handle other errors (e.g., validation errors)
-                throw new Error(error.response.data.message || "An error occurred");
-            }
+            toast.error(error);
+            <ErrorHandler error={error} />
         }
     };
 

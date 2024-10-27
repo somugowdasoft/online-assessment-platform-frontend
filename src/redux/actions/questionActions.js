@@ -35,7 +35,7 @@ export const createQuestion = (questionData) => async (dispatch) => {
         toast.success('Question created successfully!');
     } catch (error) {
         toast.error(`Error creating question: ${error.response?.data?.message || error.message}`);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
 
@@ -46,7 +46,7 @@ export const getQuestions = () => async (dispatch) => {
         dispatch({ type: GET_QUESTIONS, payload: response.data });
     } catch (error) {
         toast.error(`Error fetching questions: ${error.response?.data?.message || error.message}`);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
 
@@ -58,7 +58,7 @@ export const updateQuestion = (id, questionData) => async (dispatch) => {
         toast.success('Question updated successfully!');
     } catch (error) {
         toast.error(`Error updating question: ${error.response?.data?.message || error.message}`);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
 
@@ -70,6 +70,6 @@ export const deleteQuestion = (id) => async (dispatch) => {
         toast.success('Question deleted successfully!');
     } catch (error) {
         toast.error(`Error deleting question: ${error.response?.data?.message || error.message}`);
-        {error && <ErrorHandler error={error} />} {/* Use ErrorHandler */}
+        <ErrorHandler error={error} />
     }
 };
