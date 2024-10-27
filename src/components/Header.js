@@ -1,10 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { logout } from '../redux/actions/authActions';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaBell } from 'react-icons/fa';
+import logo from '../assets/logo.png';
 
 const Header = (props) => {
     const { toggle, isOpen } = props;
@@ -30,7 +31,7 @@ const Header = (props) => {
         setDropdownOpen(false);
     };
 
-  
+
 
     // Extract initials from the logged-in user's name
     const getInitials = (name) => {
@@ -60,8 +61,12 @@ const Header = (props) => {
             </div>
 
             {/* Left Logo */}
-            <div className="flext text-sm font-bold cursor-pointer" onClick={() => navigate('/')}>
-                <h2>Online Assessment Portal</h2>
+            <div
+                className="flex items-center text-sm font-bold p-2 rounded cursor-pointer"
+                onClick={() => navigate('/')}
+            >
+                <img src={logo} alt="logo" className="mr-2 rounded" width={28} />
+                <h2>Assessment Platform</h2>
             </div>
 
             {/* Right Profile Section */}
@@ -69,14 +74,15 @@ const Header = (props) => {
                 <div
                     className="flex items-center justify-evenly"
                 >
-                    <span className='mr-2 text-sm'>{(user.role).toUpperCase()}</span>
+                    <span className='mr-4 cursor-pointer hover:text-lg'><FaBell /></span>
+                    <span className='mr-2'>{(user.name).toUpperCase()}</span>
                     <span
                         className="flex items-center justify-center w-6 h-6 bg-white font-bold text-black rounded-full"
                     > {userName}</span>
                     {/* Show user's initials */}
 
                     <span
-                        className='ml-1 cursor-pointer'
+                        className='ml-4 cursor-pointer'
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
                         {dropdownOpen ? (

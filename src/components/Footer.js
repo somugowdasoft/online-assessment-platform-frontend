@@ -47,7 +47,7 @@ const Footer = () => {
                 </div>
                 {/* Right Section - Copyright */}
                 <div className="text-sm text-gray-400">
-                    &copy; {new Date().getFullYear()} Online Assessment Portal. All Rights Reserved.
+                    &copy; {new Date().getFullYear()} Assessment Platform. All Rights Reserved.
                 </div>
             </div>
         </footer>
