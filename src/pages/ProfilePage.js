@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,6 +19,7 @@ const ProfileUpdate = () => {
     });
 
     const dispatch = useDispatch();
+    const hasFetchedProfile = useRef(false);
     // const navigate = useNavigate();
 
     //get profile
@@ -30,12 +31,26 @@ const ProfileUpdate = () => {
         } catch (error) {
             console.error(error);
             toast.error('Failed to get profile');
+            // Check for network errors
+            if (!error.response) {
+                // Network error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else if (error.response.status >= 500) {
+                // Server error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else {
+                // Handle other errors (e.g., validation errors)
+                throw new Error(error.response.data.message || "An error occurred");
+            }
         }
     };
 
     useEffect(() => {
-        getUserProfile(user.id);
-    }, [dispatch, user.id, getUserProfile]);
+        if (!hasFetchedProfile.current) {
+            getUserProfile(user.id);
+            hasFetchedProfile.current = true; // Mark as fetched
+        }
+    }, [dispatch, user.id]);
 
 
     // Handle form submission
@@ -50,6 +65,17 @@ const ProfileUpdate = () => {
         } catch (error) {
             console.error('Error updating profile:', error);
             toast.error('Failed to update profile');
+            // Check for network errors
+            if (!error.response) {
+                // Network error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else if (error.response.status >= 500) {
+                // Server error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else {
+                // Handle other errors (e.g., validation errors)
+                throw new Error(error.response.data.message || "An error occurred");
+            }
         }
     };
 

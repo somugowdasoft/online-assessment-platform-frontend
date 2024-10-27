@@ -42,6 +42,17 @@ export const createExam = (examData) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: CREATE_EXAM_FAIL, payload: error.response?.data?.message });
+    // Check for network errors
+    if (!error.response) {
+      // Network error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else if (error.response.status >= 500) {
+      // Server error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else {
+      // Handle other errors (e.g., validation errors)
+      throw new Error(error.response.data.message || "An error occurred");
+    }
   }
 };
 
@@ -55,6 +66,17 @@ export const getExams = (id) => async (dispatch) => {
     dispatch({ type: GET_EXAM_FAIL, payload: error?.response });
     toast.error(error);
     return Promise.reject(error); // Return a rejected Promise with the error
+    // Check for network errors
+    if (!error.response) {
+      // Network error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else if (error.response.status >= 500) {
+      // Server error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else {
+      // Handle other errors (e.g., validation errors)
+      throw new Error(error.response.data.message || "An error occurred");
+    }
   }
 };
 
@@ -68,6 +90,17 @@ export const updateExam = (id, examData) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: EDIT_EXAM_FAILURE, payload: error.message || 'Failed to delete the exam' });
+    // Check for network errors
+    if (!error.response) {
+      // Network error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else if (error.response.status >= 500) {
+      // Server error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else {
+      // Handle other errors (e.g., validation errors)
+      throw new Error(error.response.data.message || "An error occurred");
+    }
   }
 };
 
@@ -82,5 +115,16 @@ export const deleteExam = (id) => async (dispatch) => {
   } catch (error) {
     toast.error(error?.response?.data?.message);
     dispatch({ type: DELETE_EXAM_FAIL, payload: error.message || 'Failed to delete the exam' });
+    // Check for network errors
+    if (!error.response) {
+      // Network error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else if (error.response.status >= 500) {
+      // Server error
+      navigate('/error'); // Navigate to the ErrorPage
+    } else {
+      // Handle other errors (e.g., validation errors)
+      throw new Error(error.response.data.message || "An error occurred");
+    }
   }
 };

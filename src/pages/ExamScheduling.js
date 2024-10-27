@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createExam, deleteExam, getExams, updateExam } from '../redux/actions/examActions';
 import { ToastContainer } from 'react-toastify';
@@ -7,16 +7,26 @@ import ExamTable from '../components/ExamTable';
 
 const ExamScheduling = () => {
     const dispatch = useDispatch();
+    const hasFetchedExams = useRef(false);
+
     const { exams } = useSelector(state => state.exams);
     const [examData, setExamData] = useState({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [examId, setExamID] = useState("");
 
-    useEffect(() => {
+    const fetchExams = () => {
         setIsLoading(true);
         dispatch(getExams());
         setIsLoading(false);
-    }, [dispatch]);
+    };
+
+    useEffect(() => {
+        if (!hasFetchedExams.current) {
+            fetchExams();  // Fetch exams only on initial mount
+            hasFetchedExams.current = true; // Mark as fetched
+        }
+    }, [dispatch]); // Dependency array includes dispatch
+
 
     const handleChange = (e) => {
         setExamData({ ...examData, [e.target.name]: e.target.value });
@@ -69,6 +79,17 @@ const ExamScheduling = () => {
             setExamData({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
         } catch (error) {
             console.log(error);
+            // Check for network errors
+            if (!error.response) {
+                // Network error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else if (error.response.status >= 500) {
+                // Server error
+                navigate('/error'); // Navigate to the ErrorPage
+            } else {
+                // Handle other errors (e.g., validation errors)
+                throw new Error(error.response.data.message || "An error occurred");
+            }
         }
 
     };

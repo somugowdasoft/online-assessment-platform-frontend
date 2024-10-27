@@ -1,10 +1,13 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaSpinner } from "react-icons/fa";
 
 const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
     return (
         <div className="container mx-auto p-4">
             {isLoading ? (
-                <p className="text-center text-gray-500">Loading ..........</p>
+                <div className="text-center">
+                    <FaSpinner className="animate-spin text-gray-500" size={24} /> {/* Spinner icon */}
+                    <p className="text-gray-500">Loading...</p>
+                </div>
             ) : (
                 <>
                     {exams && exams.length > 0 ? (
