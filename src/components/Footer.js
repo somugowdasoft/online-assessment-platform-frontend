@@ -2,10 +2,10 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-blue-500 to-indigo-700 fixed bottom-0 w-full text-white z-100 p-3">
-            <div className="container flex flex-col md:flex-row justify-between items-center">
+        <footer className="bg-gradient-to-r from-blue-500 to-indigo-700 fixed bottom-0 w-full text-white z-10 p-3">
+            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
                 {/* Left Section - Links */}
-                <div className="hidden sm:hidden md:block mb-4 md:mb-0">
+                <div className="flex flex-wrap justify-center md:justify-start mb-4 md:mb-0">
                     <a href="/about" className="text-sm text-gray-400 hover:text-white ml-2 underline">
                         About Us
                     </a>
@@ -17,9 +17,8 @@ const Footer = () => {
                     </a>
                 </div>
 
-
                 {/* Center Section - Social Media Icons */}
-                <div className="hidden sm:hidden md:hidden lg:block flex space-x-4 mb-2 md:mb-0">
+                <div className="flex justify-center space-x-4 mb-2 md:mb-0">
                     <a
                         href="https://facebook.com"
                         target="_blank"
@@ -45,8 +44,9 @@ const Footer = () => {
                         <i className="fab fa-linkedin-in"></i>
                     </a>
                 </div>
+
                 {/* Right Section - Copyright */}
-                <div className="text-sm text-gray-400">
+                <div className="text-sm text-gray-400 text-center md:text-right">
                     &copy; {new Date().getFullYear()} Assessment Platform. All Rights Reserved.
                 </div>
             </div>
