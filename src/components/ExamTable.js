@@ -13,6 +13,7 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
                             <table className="min-w-full table-auto border-collapse bg-white border border-gray-300 rounded-lg shadow-md">
                                 <thead>
                                     <tr className="bg-blue-500 text-white text-sm">
+                                        <th className="px-4 py-2 truncate border">Sl No</th>
                                         <th className="px-4 py-2 truncate border">Exam Name</th>
                                         <th className="px-4 py-2 border">Date</th>
                                         <th className="px-4 py-2 truncate border">Duration (min)</th>
@@ -23,8 +24,9 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {exams.map((exam) => (
+                                    {exams.map((exam, index) => (
                                         <tr key={exam._id} className="hover:bg-gray-50">
+                                            <td className="px-4 py-2 border truncate text-center">{index + 1}</td>
                                             <td className="px-4 py-2 border truncate text-center">{exam.name}</td>
                                             <td className="px-4 py-2 border text-center">
                                                 {new Date(exam.date).toLocaleDateString()}
