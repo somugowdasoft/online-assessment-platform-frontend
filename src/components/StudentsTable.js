@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa";
 const StudentTable = ({ students, isLoading, togglePermission, onDelete }) => {
 
     return (
-        <div className="container p-4 max-w-full overflow-x-auto m-8">
+        <div className="container p-4 max-w-full overflow-x-auto">
             {isLoading ? (
                 <p className="text-center text-gray-500">Loading ..........</p>
             ) : (

@@ -10,6 +10,7 @@ import AdminDashboard from './pages/AdminDashboard'
 import ProfileUpdate from './components/ProfileUpdate';
 import ExamScheduling from './pages/ExamScheduling';
 import StudentsList from './pages/StudentsList';
+import QuestionBank from './pages/QuestionBank';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -27,7 +28,8 @@ function App() {
 
         <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >
           <Route path="profile" element={<ProfileUpdate />} />
-          <Route path="exam-scheduling" element={<ExamScheduling />} />
+          <Route path="exams" element={<ExamScheduling />} />
+          <Route path="questions" element={<QuestionBank />} />
           <Route path="students" element={<StudentsList />} />
         </Route>
       </Routes>

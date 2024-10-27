@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate  } from 'react-icons/fa'; // Icons from react-icons
+import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle  } from 'react-icons/fa'; // Icons from react-icons
 
 const Sidebar = (props) => {
     const { isOpen } = props;
@@ -8,7 +8,7 @@ const Sidebar = (props) => {
     return (
         <aside
             className={`  ${isOpen ? 'block' : 'hidden'} lg:block`}
-            style={{ width: '100px' }}
+            style={{ width: '15%', float: 'left' }}
         >
             <div
                 className={`fixed left-0 h-full bg-gradient-to-r from-blue-500 to-purple-600 text-white transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'
@@ -19,7 +19,8 @@ const Sidebar = (props) => {
                     <nav className="flex-1 p-4 space-y-4">
                         <NavItem icon={<FaHome />} name="Dashboard" path="/" />
                         <NavItem icon={<FaUser />} name="Profile" path="profile" />
-                        <NavItem icon={<FaCalendarDay  />} name="Exams" path="exam-scheduling" />
+                        <NavItem icon={<FaCalendarDay  />} name="Exams" path="exams" />
+                        <NavItem icon={<FaRegQuestionCircle  />} name="Question Banks" path="questions" />
                         <NavItem icon={<FaUserGraduate  />} name="Students List" path="students" />
                         <NavItem icon={<FaCog />} name="Settings" path="settings" />
                     </nav>

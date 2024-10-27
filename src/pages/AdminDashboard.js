@@ -20,7 +20,7 @@ const AdminDashboard = () => {
         <Sidebar isOpen={isOpen} />
 
         {/* Main Content */}
-        <main className="flex-1 p-4">
+        <main className="flex-1 p-4" style={{ width: "75%", float: "left" }}>
           <Outlet />
         </main>
       </div>

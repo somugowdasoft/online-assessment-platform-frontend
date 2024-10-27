@@ -76,7 +76,7 @@ const ExamScheduling = () => {
     return (
         <div className="container mx-auto p-4">
             <ToastContainer />
-            <h2 className="flex justify-center items-center text-xl text-blue-500 font-bold mb-4">Schedule Exam</h2>
+            <h2 className="flex justify-center items-center text-xl text-blue-500 font-bold mb-4">Exam Management</h2>
             <form onSubmit={handleSubmit} className="mb-4 flex flex-col justify-center items-center space-y-4">
 
                 {/* Row for Exam Name and Date */}
