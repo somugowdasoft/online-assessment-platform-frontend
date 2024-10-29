@@ -173,8 +173,14 @@ const ExamScheduling = () => {
                     required
                     className="border-2 border-blue-500 rounded w-full md:w-1/2 lg:w-1/2 focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-12 resize-none"
                 />
+                {
+                    examId ? (
+                        <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Update Exam</button>
+                    ) : (
+                        <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Schedule Exam</button>
+                    )
+                }
 
-                <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Schedule Exam</button>
             </form>
 
 
