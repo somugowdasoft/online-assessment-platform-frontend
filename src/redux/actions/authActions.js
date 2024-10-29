@@ -51,8 +51,8 @@ export const login = (userData) => async (dispatch) => {
     localStorage.setItem('token', JSON.stringify(response.data?.token));
     return response.data;  // Return the response for successful login
   } catch (error) {
+    toast.error(error.response?.data?.message || error.response?.data );
     dispatch({ type: 'LOGIN_FAIL', payload: error.response.data });
-    toast.error(error);
     <ErrorHandler error={error} />
   }
 };

@@ -16,10 +16,13 @@ const ExamScheduling = () => {
     const [examData, setExamData] = useState({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [examId, setExamID] = useState("");
+    // State for search query
+    const [searchQuery, setSearchQuery] = useState('');
 
     const fetchExams = () => {
         setIsLoading(true);
         dispatch(getExams());
+        setSearchQuery("");
         setIsLoading(false);
     };
 
@@ -79,12 +82,23 @@ const ExamScheduling = () => {
             }
             setIsLoading(false);
             setExamID("");
+            setSearchQuery("");
             setExamData({ name: '', date: '', duration: '', totalMarks: '', totalQuestions: "", description: "" }); // Reset form
         } catch (error) {
             console.log(error);
             <ErrorHandler error={error} />
         }
 
+    };
+
+    // Filter exams based on the search query
+    const filteredExams = exams.filter((exam) =>
+        exam.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Handle search input change
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     };
 
     return (
@@ -167,8 +181,20 @@ const ExamScheduling = () => {
             {/* exam lists */}
             <h2 className="flex justify-center items-center text-xl font-bold mb-4 mt-6">Scheduled Exams : </h2>
 
+            <div className="flex flex-col justify-center w-1/4 ml-4">
+                <h2 className='text-lg font-semibold'>Search here :</h2>
+                {/* Search input */}
+                <input
+                    type="text"
+                    placeholder="Search exams by name..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="border p-2 rounded border-blue-500"
+                />
+            </div>
+
             <ExamTable
-                exams={exams}
+                exams={filteredExams}
                 isLoading={isLoading}
                 onDelete={(id) => handleDelete(id)}
                 onEdit={(id) => updateFun(id)}
