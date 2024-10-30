@@ -7,7 +7,8 @@ import {
   CREATE_EXAM_FAIL,
   GET_EXAM_FAIL, DELETE_EXAM_FAIL,
   DELETE_EXAM, EDIT_EXAM_FAILURE,
-  EDIT_EXAM_SUCCESS
+  EDIT_EXAM_SUCCESS,
+  GET_EXAM_BY_ID
 } from '../../constants/examConstants';
 
 // Base configuration for Axios
@@ -50,7 +51,7 @@ export const createExam = (examData) => async (dispatch) => {
 //get exams
 export const getExams = (id) => async (dispatch) => {
   try {
-    const { data } = await API.get(`/exams`);
+    const { data } = await API.get(`/`);
     dispatch({ type: GET_EXAMS, payload: data });
     return data;
   } catch (error) {
@@ -59,6 +60,20 @@ export const getExams = (id) => async (dispatch) => {
     <ErrorHandler error={error} />
   }
 };
+
+// Get exam by ID
+export const getExamById = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.get(`/exams/${id}`); // API call to fetch exam by ID
+    dispatch({ type: GET_EXAM_BY_ID, payload: data }); // Dispatch the fetched exam data
+    return data;
+  } catch (error) {
+    dispatch({ type: GET_EXAM_FAIL, payload: error?.response });
+    toast.error(`Error fetching exam: ${error?.response?.data?.message || error.message}`);
+    <ErrorHandler error={error} />;
+  }
+};
+
 
 //delete exam
 export const updateExam = (id, examData) => async (dispatch) => {

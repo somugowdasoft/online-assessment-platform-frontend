@@ -6,6 +6,9 @@ export const  CREATE_EXAM_FAIL = "CREATE_EXAM_FAIL";
 export const  GET_EXAMS = "GET_EXAMS";
 export const  GET_EXAM_FAIL = "GET_EXAM_FAIL";
 
+export const GET_EXAM_BY_ID = "GET_EXAM_BY_ID";
+
+
 //edit exam
 export const EDIT_EXAM_SUCCESS = 'EDIT_EXAM_SUCCESS';
 export const EDIT_EXAM_FAILURE = 'EDIT_EXAM_SUCCESS';

@@ -5,9 +5,11 @@ import { ToastContainer } from 'react-toastify';
 import { formatDateToInput } from '../utils/dateUtils';
 import ExamTable from '../components/ExamTable';
 import ErrorHandler from '../components/ErrorHandler';
+import { useNavigate } from 'react-router-dom';
 
 const ExamScheduling = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const hasFetchedExams = useRef(false);
 
     const { exams } = useSelector(state => state.exams);
@@ -36,6 +38,11 @@ const ExamScheduling = () => {
     const handleChange = (e) => {
         setExamData({ ...examData, [e.target.name]: e.target.value });
     };
+
+    //handle view exam
+    const handleView = (id) => {
+        navigate(`/admin/dashboard/exams/${id}`);
+    }
 
     // filtering editing exam
     const updateFun = (id) => {
@@ -90,8 +97,8 @@ const ExamScheduling = () => {
 
     };
 
-     // Filter exams based on the search query
-     const filteredExams = exams.filter((exam) => {        
+    // Filter exams based on the search query
+    const filteredExams = exams.filter((exam) => {
         // Check if question and question.question are defined
         return exam && exam.name && exam.name.toLowerCase().includes(searchQuery.toLowerCase());
     });
@@ -201,6 +208,7 @@ const ExamScheduling = () => {
             <ExamTable
                 exams={filteredExams}
                 isLoading={isLoading}
+                onView={(e) => handleView(e)}
                 onDelete={(id) => handleDelete(id)}
                 onEdit={(id) => updateFun(id)}
             />

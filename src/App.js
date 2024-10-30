@@ -16,6 +16,7 @@ import ErrorPage from './components/ErrorPage';
 import TermsOfService from './components/footer/TermsOfService';
 import PrivacyPolicy from './components/footer/PrivacyPolicy';
 import About from './components/footer/About ';
+import ExamView from './components/ExamView';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -39,6 +40,7 @@ function App() {
           <Route path="" element={<AdminDashboardPage />} />
           <Route path="profile" element={<ProfileUpdate />} />
           <Route path="exams" element={<ExamScheduling />} />
+          <Route path="exams/:id" element={<ExamView />} />
           <Route path="questions" element={<QuestionBank />} />
           <Route path="students" element={<StudentsList />} />
         </Route>

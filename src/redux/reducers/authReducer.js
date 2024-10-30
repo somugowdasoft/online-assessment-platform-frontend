@@ -2,7 +2,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   error: null,
-  userData: null
+  userData: []
 };
 
 const authReducer = (state = initialState, action) => {

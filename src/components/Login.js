@@ -25,7 +25,7 @@ const Login = () => {
                     } else if (response?.user?.role === 'admin') {
                         navigate('/admin/dashboard');
                     }
-                }, 2000);
+                }, 1000);
             }
         } catch (error) {
             console.error("Login failed", error);

@@ -1,6 +1,6 @@
-import { FaEdit, FaTrash, FaSpinner } from "react-icons/fa";
+import { FaEdit, FaTrash, FaSpinner, FaEye } from "react-icons/fa";
 
-const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
+const ExamTable = ({ exams, isLoading, onEdit, onDelete, onView }) => {
     return (
         <div className="container mx-auto p-2">
             {isLoading ? (
@@ -38,6 +38,13 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
                                         <td className="px-4 py-2 border text-center">{exam.totalQuestions}</td>
                                         <td className="px-4 py-2 border truncate text-center">{exam.description}</td>
                                         <td className="px-4 py-2 border text-center">
+                                            <button
+                                                onClick={() => onView(exam._id)}  // Add the view functionality here
+                                                className="text-blue-500 hover:text-blue-700 mr-3"
+                                                aria-label="View"
+                                            >
+                                                <FaEye />
+                                            </button>
                                             <button
                                                 onClick={() => onEdit(exam._id)}
                                                 className="text-blue-500 hover:text-blue-700 mr-3"
