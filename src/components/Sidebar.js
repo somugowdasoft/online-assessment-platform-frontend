@@ -9,8 +9,7 @@ const Sidebar = (props) => {
 
     return (
         <aside
-            className={`  ${isOpen ? 'block' : 'hidden'} lg:block`}
-            style={{ width: '15%', float: 'left' }}
+            className={`w-[15%] float-left  ${isOpen ? 'block' : 'hidden'} lg:block`}
         >
             <div
                 className={`fixed left-0 h-full bg-gradient-to-r from-blue-500 to-purple-600 text-white transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'
