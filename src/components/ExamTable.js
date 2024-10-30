@@ -2,7 +2,7 @@ import { FaEdit, FaTrash, FaSpinner } from "react-icons/fa";
 
 const ExamTable = ({ exams, isLoading, onEdit, onDelete }) => {
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-2">
             {isLoading ? (
                 <div className="text-center">
                     <FaSpinner className="animate-spin text-gray-500" size={24} /> {/* Spinner icon */}

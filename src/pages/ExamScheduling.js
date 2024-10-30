@@ -4,12 +4,10 @@ import { createExam, deleteExam, getExams, updateExam } from '../redux/actions/e
 import { ToastContainer } from 'react-toastify';
 import { formatDateToInput } from '../utils/dateUtils';
 import ExamTable from '../components/ExamTable';
-import { useNavigate } from 'react-router-dom';
 import ErrorHandler from '../components/ErrorHandler';
 
 const ExamScheduling = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const hasFetchedExams = useRef(false);
 
     const { exams } = useSelector(state => state.exams);
@@ -19,6 +17,7 @@ const ExamScheduling = () => {
     // State for search query
     const [searchQuery, setSearchQuery] = useState('');
 
+    //get exams
     const fetchExams = () => {
         setIsLoading(true);
         dispatch(getExams());
@@ -180,23 +179,22 @@ const ExamScheduling = () => {
                         <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Schedule Exam</button>
                     )
                 }
-
             </form>
+            <hr />
+            <div className="flex items-center justify-between w-full mb-2 p-3">
+                {/* Exams heading */}
+                <h2 className="text-xl font-bold ml-4">Scheduled Exams:</h2>
 
-
-            {/* exam lists */}
-            <h2 className="flex justify-center items-center text-xl font-bold mb-4 mt-6">Scheduled Exams : </h2>
-
-            <div className="flex flex-col justify-center w-1/4 ml-4">
-                <h2 className='text-lg font-semibold'>Search here :</h2>
-                {/* Search input */}
-                <input
-                    type="text"
-                    placeholder="Search exams by name..."
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    className="border p-2 rounded border-blue-500"
-                />
+                {/* Search Section */}
+                <div className="flex flex-col justify-center w-1/3 mr-4">
+                    <input
+                        type="text"
+                        placeholder="Search exams by name..."
+                        value={searchQuery}
+                        onChange={handleSearchChange} // Use the appropriate search handler function
+                        className="border p-2 rounded border-blue-500"
+                    />
+                </div>
             </div>
 
             <ExamTable

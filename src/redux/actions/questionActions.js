@@ -30,9 +30,9 @@ API.interceptors.request.use(
 // Create Question
 export const createQuestion = (questionData) => async (dispatch) => {
     try {
-        const response = await API.post('/', questionData);
+        const response = await API.post('/add', questionData);
+        toast.success(response?.data?.message || 'Question created successfully!');
         dispatch({ type: CREATE_QUESTION, payload: response.data });
-        toast.success('Question created successfully!');
     } catch (error) {
         toast.error(`Error creating question: ${error.response?.data?.message || error.message}`);
         <ErrorHandler error={error} />
@@ -65,9 +65,9 @@ export const updateQuestion = (id, questionData) => async (dispatch) => {
 // Delete Question
 export const deleteQuestion = (id) => async (dispatch) => {
     try {
-        await API.delete(`/${id}`);
+        const { response } = await API.delete(`/${id}`);
+        toast.success(response?.data?.message || 'Question deleted successfully!');
         dispatch({ type: DELETE_QUESTION, payload: id });
-        toast.success('Question deleted successfully!');
     } catch (error) {
         toast.error(`Error deleting question: ${error.response?.data?.message || error.message}`);
         <ErrorHandler error={error} />
