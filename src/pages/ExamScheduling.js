@@ -90,10 +90,11 @@ const ExamScheduling = () => {
 
     };
 
-    // Filter exams based on the search query
-    const filteredExams = exams.filter((exam) =>
-        exam.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+     // Filter exams based on the search query
+     const filteredExams = exams.filter((exam) => {        
+        // Check if question and question.question are defined
+        return exam && exam.name && exam.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     // Handle search input change
     const handleSearchChange = (e) => {
