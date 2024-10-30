@@ -2,7 +2,7 @@ import { CREATE_EXAM, GET_EXAMS, CREATE_EXAM_FAIL, GET_EXAM_FAIL, DELETE_EXAM, D
 
 const initialState = {
     exams: [],
-    examById: [],
+    examDetails: [],
     isLoading: false,
     error: null,
 };
@@ -12,7 +12,7 @@ export const examReducer = (state = initialState, action) => {
         case GET_EXAMS:
             return { ...state, exams: action.payload };
         case GET_EXAM_BY_ID:
-            return { ...state, examById: action.payload }
+            return { ...state, examDetails: action.payload }
         case CREATE_EXAM:
             return { ...state, exams: [...state.exams, action.payload] };
         case CREATE_EXAM_FAIL:
