@@ -31,12 +31,27 @@ const AdminDashboardPage = () => {
   }, [dispatch]); // Dependency array includes dispatch
 
   // Filter upcoming exams (exams with a date in the future)
-  const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) >= new Date()) : [];
+  const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) > new Date()) : [];
+
+  // Filter active exams (exams with a date today)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+
+  const activeExams = exams ? exams.filter(exam => {
+    const examDate = new Date(exam.date);
+    examDate.setHours(0, 0, 0, 0); // Set exam date to midnight
+    return examDate.getTime() === today.getTime(); // Compare only date parts
+  }) : [];
+
+  // Calculate Completion Rate
+  const completedExams = exams ? exams.filter(exam => new Date(exam.date) < new Date()).length : 0;
+  const totalExams = exams ? exams.length : 0;
+  const completionRate = totalExams > 0 ? ((completedExams / totalExams) * 100).toFixed(0) + '%' : '0%';
 
   const stats = [
     { title: 'Total Students', value: students ? students.length : 0, icon: Users, bgColor: "bg-blue-500/[0.6]" },
-    { title: 'Active Exams', value: '23', icon: BookOpen, trend: -5, bgColor: "bg-red-500/[0.6]" },
-    { title: 'Completion Rate', value: '87%', icon: BarChart, trend: 3, bgColor: "bg-lime-500/[0.6]" },
+    { title: 'Active Exams', value: activeExams.length, icon: BookOpen, bgColor: "bg-red-500/[0.6]" },
+    { title: 'Completion Rate', value: completionRate, icon: BarChart, bgColor: "bg-lime-500/[0.6]" },
     { title: 'Upcoming Exams', value: upcomingExams.length, icon: Calendar, bgColor: "bg-cyan-500/[0.6]" }
   ];
 

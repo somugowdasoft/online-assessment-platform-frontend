@@ -13,11 +13,9 @@ const StatsCard = ({ title, value, icon: Icon, trend, bgColor }) => {
                             View Students {'→'}
                         </Link>
                     ) : (
-                        trend && (
-                            <p className={`text-sm mt-2 ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
-                            </p>
-                        )
+                        <Link to="exams" className="text-sm hover:underline mt-1">
+                            View Exam {'→'}
+                        </Link>
                     )}
                 </div>
                 <Icon className="h-8 w-8 text-blue-500" />
