@@ -18,10 +18,10 @@ const StudentDashboardPage = () => {
                     <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Link
-                            to="upcoming-exams"
+                            to="exams"
                             className="bg-blue-500 text-white rounded-lg p-2 text-center hover:bg-blue-600"
                         >
-                            View Upcoming Exams
+                            View all Exams
                         </Link>
                         <Link
                             to="profile"

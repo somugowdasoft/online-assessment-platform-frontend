@@ -45,7 +45,7 @@ const Sidebar = (props) => {
                                 <NavItem icon={<FaUserGraduate />} name="Students List" path="students" />
                             </>
                         ) : (
-                            <NavItem icon={<FaCalendarDay />} name="Upcoming Exams" path="upcoming-exams" />
+                            <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
                         )}
                     </nav>
                 </div>

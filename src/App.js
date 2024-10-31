@@ -38,7 +38,7 @@ function App() {
         <Route path="/student/dashboard" element={isAuthenticated && user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/login" />} >
           <Route path='' element={<StudentDashboardPage />} />
           <Route path="profile" element={<ProfileUpdate />} />
-          <Route path="upcoming-exams" element={<UpcomingExams />} />
+          <Route path="exams" element={<UpcomingExams />} />
           <Route path="exam-details/:id" element={<ExamDetails />} />
         </Route>
 

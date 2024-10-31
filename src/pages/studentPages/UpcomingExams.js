@@ -50,7 +50,7 @@ const UpcomingExams = () => {
         <div className="p-4 max-w-7xl mx-auto">
             <div className="mb-6 flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-blue-500">Upcoming Exams</h1>
+                    <h1 className="text-2xl font-bold text-blue-500">Exams</h1>
                     <p className="text-gray-600">Keep track of your scheduled examinations</p>
                 </div>
 
