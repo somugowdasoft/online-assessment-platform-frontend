@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 // Import icons 
 import { FaUsers as Users, FaBookOpen as BookOpen, FaChartBar as BarChart, FaCalendar as Calendar } from 'react-icons/fa';
 // Import components
@@ -16,7 +16,8 @@ const AdminDashboardPage = () => {
 
   const dispatch = useDispatch();
   const hasFetchedExams = useRef(false);
-  //get exams
+
+  // Get exams and students
   const fetchExams = () => {
     dispatch(getExams());
     dispatch(getAllStudents());
@@ -24,17 +25,19 @@ const AdminDashboardPage = () => {
 
   useEffect(() => {
     if (!hasFetchedExams.current) {
-      fetchExams();  // Fetch exams only on initial mount
+      fetchExams(); // Fetch exams only on initial mount
       hasFetchedExams.current = true; // Mark as fetched
     }
   }, [dispatch]); // Dependency array includes dispatch
 
+  // Filter upcoming exams (exams with a date in the future)
+  const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) >= new Date()) : [];
 
   const stats = [
     { title: 'Total Students', value: students ? students.length : 0, icon: Users, bgColor: "bg-blue-500/[0.6]" },
     { title: 'Active Exams', value: '23', icon: BookOpen, trend: -5, bgColor: "bg-red-500/[0.6]" },
     { title: 'Completion Rate', value: '87%', icon: BarChart, trend: 3, bgColor: "bg-lime-500/[0.6]" },
-    { title: 'Upcoming Exams', value: exams ? exams.length : 0, icon: Calendar, bgColor: "bg-cyan-500/[0.6]" }
+    { title: 'Upcoming Exams', value: upcomingExams.length, icon: Calendar, bgColor: "bg-cyan-500/[0.6]" }
   ];
 
   return (
@@ -53,7 +56,7 @@ const AdminDashboardPage = () => {
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         {/* Upcoming Exams */}
-        <UpcomingExams exams={exams} />
+        <UpcomingExams exams={upcomingExams} />
 
         {/* Recent Activity */}
         <RecentActivity />

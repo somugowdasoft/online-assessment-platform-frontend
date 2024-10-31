@@ -10,48 +10,44 @@ const UpcomingExams = ({ exams }) => {
         await navigate(`/admin/dashboard/exams/${id}`);
     };
 
-    // Get today's date
+    // Get today's date at midnight
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+
+    // Filter exams to show only today's and future exams
+    const upcomingExams = exams.filter(exam => {
+        const examDate = new Date(exam.date);
+        return examDate >= today; // Include exams today or in the future
+    });
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md overflow-y-auto max-h-64 scrollbar-hide">
             <h2 className="text-lg font-semibold mb-4">Upcoming Exams</h2>
             <div className="space-y-4">
-                {exams.map((exam) => {
-                    const examDate = new Date(exam.date);
-                    const isExamPassed = examDate < today; // Check if the exam date has passed
+                {upcomingExams.length > 0 ? (
+                    upcomingExams.map((exam) => {
+                        const examDate = new Date(exam.date);
 
-                    return (
-                        <div key={exam._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                            <div>
-                                {isExamPassed ? (
-                                    <div>
-                                        <h3 className="font-medium text-gray-500">
-                                            <del>{exam.name}</del>
-                                        </h3>
-                                        <p className="text-sm text-gray-500">
-                                            <del>{formatDateToInput(exam.date)} at {new Date(exam.date).toLocaleTimeString()}</del>
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <h3 className="font-medium">{exam.name}</h3>
-                                        <p className="text-sm text-gray-500">
-                                            {formatDateToInput(exam.date)} at {new Date(exam.date).toLocaleTimeString()}
-                                        </p>
-                                    </div>
-                                )}
+                        return (
+                            <div key={exam._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 className="font-medium">{exam.name}</h3>
+                                    <p className="text-sm text-gray-500">
+                                        {formatDateToInput(exam.date)} (end by same day.)  
+                                    </p>
+                                </div>
+                                <button
+                                    className={`w-32 px-4 py-2 text-sm text-white rounded-md bg-blue-600 hover:bg-blue-700`}
+                                    onClick={() => handleView(exam._id)}
+                                >
+                                    View Details
+                                </button>
                             </div>
-                            <button
-                                className={`w-32 px-4 py-2 text-sm text-white rounded-md bg-blue-600 hover:bg-blue-700`}
-                                onClick={() => handleView(exam._id)}
-                            >
-                                {isExamPassed ? 'Update Exam' : 'View Details'}
-                            </button>
-
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                ) : (
+                    <p className="text-gray-500">No upcoming exams found.</p>
+                )}
             </div>
         </div>
     );
