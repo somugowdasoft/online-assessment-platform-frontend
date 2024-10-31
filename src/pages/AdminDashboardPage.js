@@ -8,6 +8,7 @@ import RecentActivity from '../components/dashboard/RecentActivity';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExams } from '../redux/actions/examActions';
 import { getAllStudents } from '../redux/actions/studentActions';
+import QuickActions from '../components/dashboard/QuickActions';
 
 const AdminDashboardPage = () => {
   const { exams } = useSelector(state => state.exams);
@@ -43,6 +44,10 @@ const AdminDashboardPage = () => {
         {stats.map((stat) => (
           <StatsCard key={stat.title} {...stat} />
         ))}
+      </div>
+
+      <div>
+        <QuickActions />
       </div>
 
       {/* Two Column Layout */}

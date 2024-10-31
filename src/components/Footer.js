@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="bg-gradient-to-r from-blue-500 to-indigo-700 fixed bottom-0 w-full text-white z-10 p-3">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
                 {/* Left Section - Links */}
-                <div className="flex flex-wrap justify-center md:justify-start mb-4 md:mb-0">
+                <div className="hidden md:flex flex-wrap justify-center md:justify-start mb-4 md:mb-0">
                     <a href="/about" className="text-sm text-gray-400 hover:text-white ml-2 underline">
                         About Us
                     </a>

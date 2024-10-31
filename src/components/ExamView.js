@@ -13,8 +13,6 @@ const ExamView = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    console.log("Exam ID:", id);
-
     useEffect(() => {
         // Fetch the exam by ID when the component mounts
         const fetchExam = async () => {

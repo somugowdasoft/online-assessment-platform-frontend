@@ -1,6 +1,6 @@
 import { FaEdit, FaTrash, FaSpinner } from "react-icons/fa";
 
-const QuestionTable = ({ questions, isLoading, onEdit, onDelete }) => {
+const QuestionTable = ({ questions, isLoading, onEdit, onDelete }) => {    
     return (
         <div className="container mx-auto p-2">
             {isLoading ? (
@@ -18,6 +18,7 @@ const QuestionTable = ({ questions, isLoading, onEdit, onDelete }) => {
                                     <th className="px-4 py-2 truncate border">Sl No</th>
                                     <th className="px-4 py-2 truncate border">Question</th>
                                     <th className="px-4 py-2 border">Answer</th>
+                                    <th className="px-4 py-2 truncate border">Type</th>
                                     <th className="px-4 py-2 truncate border">Difficulty</th>
                                     <th className="px-4 py-2 truncate border">Exam</th>
                                     <th className="px-4 py-2 truncate border">Actions</th>
@@ -29,7 +30,8 @@ const QuestionTable = ({ questions, isLoading, onEdit, onDelete }) => {
                                         <tr key={question._id} className="hover:bg-gray-50">
                                             <td className="px-4 py-2 border truncate text-center">{index + 1}</td>
                                             <td className="px-4 py-2 border truncate text-left">{question.question}</td>
-                                            <td className="px-4 py-2 border text-center">{question.answer || "--"}</td>
+                                            <td className="px-4 py-2 border text-left truncate">{question.correctAnswer || "--"}</td>
+                                            <td className="px-4 py-2 border text-center">{question.questionType}</td>
                                             <td className="px-4 py-2 border text-center">{question.difficulty}</td>
                                             <td className="px-4 py-2 border text-center">{question.exam}</td>
                                             <td className="px-4 py-2 border text-center">

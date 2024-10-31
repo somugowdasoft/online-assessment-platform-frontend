@@ -36,7 +36,7 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete, onView }) => {
                                         <td className="px-4 py-2 border text-center">{exam.duration}</td>
                                         <td className="px-4 py-2 border text-center">{exam.totalMarks}</td>
                                         <td className="px-4 py-2 border text-center">{exam.totalQuestions}</td>
-                                        <td className="px-4 py-2 border truncate text-center">{exam.description}</td>
+                                        <td className="px-4 py-2 border truncate text-center max-w-xs">{exam.description}</td>
                                         <td className="px-4 py-2 border text-center">
                                             <button
                                                 onClick={() => onView(exam._id)}  // Add the view functionality here

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle, FaUserCircle } from 'react-icons/fa'; // Icons from react-icons
 import { useSelector } from 'react-redux';
@@ -6,6 +6,15 @@ import { useSelector } from 'react-redux';
 const Sidebar = (props) => {
     const { isOpen } = props;
     const { isAuthenticated, user } = useSelector((state) => state.auth);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        if (user && user.role === "admin") {
+            setIsAdmin(true);
+        } else {
+            setIsAdmin(false);
+        }
+    }, [user]);
 
     return (
         <aside
@@ -29,9 +38,15 @@ const Sidebar = (props) => {
                     <nav className="flex-1 p-4 space-y-4">
                         <NavItem icon={<FaHome />} name="Dashboard" path="/" />
                         <NavItem icon={<FaUser />} name="Profile" path="profile" />
-                        <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
-                        <NavItem icon={<FaRegQuestionCircle />} name="Question Banks" path="questions" />
-                        <NavItem icon={<FaUserGraduate />} name="Students List" path="students" />
+                        {isAdmin ? (
+                            <>
+                                <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
+                                <NavItem icon={<FaRegQuestionCircle />} name="Question Banks" path="questions" />
+                                <NavItem icon={<FaUserGraduate />} name="Students List" path="students" />
+                            </>
+                        ) : (
+                            <NavItem icon={<FaCalendarDay />} name="Upcoming Exams" path="upcoming-exams" />
+                        )}
                     </nav>
                 </div>
             </div>
@@ -44,8 +59,10 @@ const NavItem = ({ icon, name, path }) => {
     return (
         <NavLink
             to={path}
-            className="group flex items-center space-x-4 p-2 hover:bg-black rounded cursor-pointer"
-            activeClassName="bg-gray-700"
+            className={({ isActive }) =>
+                `group flex items-center space-x-4 p-2 rounded cursor-pointer ${isActive ? 'bg-indigo-700 text-white' : 'hover:bg-black text-gray-200'
+                }`
+            }
         >
             <div className="text-xl">{icon}</div>
             <span className="text-sm font-medium">{name}</span>

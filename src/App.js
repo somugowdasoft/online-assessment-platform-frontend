@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Register from './components/Register';
 import Login from './components/Login';
-import StudentDashboard from './pages/StudentDashboard';
+import StudentDashboard from './pages/studentPages/StudentDashboard';
 import AdminDashboard from './pages/AdminDashboard'
 import ProfileUpdate from './pages/ProfilePage';
 import ExamScheduling from './pages/ExamScheduling';
@@ -17,6 +17,9 @@ import TermsOfService from './components/footer/TermsOfService';
 import PrivacyPolicy from './components/footer/PrivacyPolicy';
 import About from './components/footer/About ';
 import ExamView from './components/ExamView';
+import StudentDashboardPage from './pages/studentPages/StudentDashboardPage';
+import UpcomingExams from './pages/studentPages/UpcomingExams';
+import ExamDetails from './pages/studentExam/ExamDetails';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -33,7 +36,10 @@ function App() {
         <Route path="/terms" element={<TermsOfService />} />
 
         <Route path="/student/dashboard" element={isAuthenticated && user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/login" />} >
+          <Route path='' element={<StudentDashboardPage />} />
           <Route path="profile" element={<ProfileUpdate />} />
+          <Route path="upcoming-exams" element={<UpcomingExams />} />
+          <Route path="exam-details/:id" element={<ExamDetails />} />
         </Route>
 
         <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >
