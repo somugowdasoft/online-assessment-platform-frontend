@@ -21,27 +21,27 @@ const ProfileUpdate = () => {
         gender: "",
     });
 
-    // Get user profile
-    const getUserProfile = async (data) => {
-        let id = data || user.id;
-        setIsLoading(true); // Start loading
-        try {
-            await dispatch(getProfile(id));
-        } catch (error) {
-            console.error(error);
-            toast.error('Failed to get profile');
-            <ErrorHandler error={error} />
-        } finally {
-            setIsLoading(false); // Stop loading
-        }
-    };
-
     useEffect(() => {
+        const getUserProfile = async (data) => {
+            let id = data || user.id;
+            setIsLoading(true); // Start loading
+            try {
+                await dispatch(getProfile(id));
+            } catch (error) {
+                console.error(error);
+                toast.error('Failed to get profile');
+                <ErrorHandler error={error} />
+            } finally {
+                setIsLoading(false); // Stop loading
+            }
+        };
+    
         if (!hasFetchedProfile.current) {
             getUserProfile(user.id);
             hasFetchedProfile.current = true; // Mark as fetched
         }
-    }, [dispatch, user.id]);
+    }, [dispatch, user.id]); // Removed getUserProfile from dependencies
+    
 
     useEffect(() => {
         // Update formData when userData changes

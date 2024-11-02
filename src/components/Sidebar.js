@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle, FaUserCircle, FaChartLine } from 'react-icons/fa'; // Icons from react-icons
+import { FaHome, FaUser, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle, FaUserCircle, FaChartLine } from 'react-icons/fa'; // Icons from react-icons
 import { useSelector } from 'react-redux';
 
 const Sidebar = (props) => {

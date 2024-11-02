@@ -26,7 +26,6 @@ const UpcomingExams = ({ exams }) => {
             <div className="space-y-4">
                 {upcomingExams.length > 0 ? (
                     upcomingExams.map((exam) => {
-                        const examDate = new Date(exam.date);
 
                         return (
                             <div key={exam._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">

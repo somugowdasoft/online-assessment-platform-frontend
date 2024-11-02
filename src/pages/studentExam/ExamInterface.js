@@ -14,11 +14,11 @@ const ExamInterface = () => {
 
     const { id } = useParams();  // Get the exam ID from the URL
     const { examDetails } = useSelector(state => state.exams);
-    const { examData, metadata, questions } = examDetails;
+    const { examData, questions } = examDetails;
 
     const [answers, setAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(null);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    // const [isFullscreen, setIsFullscreen] = useState(false);
     const webcamRef = useRef(null);
     const [warningCount, setWarningCount] = useState(0);
     const [examStatus, setExamStatus] = useState('started'); // waiting, started, submitted
@@ -81,7 +81,7 @@ const ExamInterface = () => {
     // Monitor fullscreen
     useEffect(() => {
         const handleFullscreenChange = () => {
-            setIsFullscreen(!!document.fullscreenElement);
+            // setIsFullscreen(!!document.fullscreenElement);
             if (!document.fullscreenElement && examStatus === 'started') {
                 handleSuspiciousActivity('Left fullscreen mode');
             }

@@ -10,15 +10,14 @@ const StudentResult = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  // Function to fetch single student results from API
-  const fetchStudentResults = async () => {
-    await dispatch(getStudentResult(id)).finally(() => setLoading(false)); // Fetch the student result
-  };
-
   useEffect(() => {
-    setLoading(true);
+    const fetchStudentResults = async () => {
+      setLoading(true); // Set loading state before fetching
+      await dispatch(getStudentResult(id)).finally(() => setLoading(false)); // Fetch the student result
+    };
+
     fetchStudentResults();
-  }, [id]);
+  }, [dispatch, id]);
 
   // Show loading spinner if still fetching the data
   if (loading) {

@@ -15,20 +15,20 @@ const UpcomingExams = () => {
     const navigate = useNavigate();
     const hasFetchedExams = useRef(false);
 
-    // Get exams
-    const fetchExams = () => {
-        setIsLoading(true);
-        dispatch(getSubmited());
-        dispatch(getExams())
-            .finally(() => setIsLoading(false)); // Ensure isLoading is false after fetching
-    };
-
     useEffect(() => {
+        const fetchExams = () => {
+            setIsLoading(true);
+            dispatch(getSubmited());
+            dispatch(getExams())
+                .finally(() => setIsLoading(false)); // Ensure isLoading is false after fetching
+        };
+
         if (!hasFetchedExams.current) {
             fetchExams(); // Fetch exams only on initial mount
             hasFetchedExams.current = true; // Mark as fetched
         }
-    }, [dispatch]); // Dependency array includes dispatch
+    }, [dispatch]); // Removed fetchExams from dependencies
+
 
     // Handle view exam
     const handleView = (id) => {
@@ -80,54 +80,54 @@ const UpcomingExams = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 mt-4 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
-                {upcomingExams.map((exam, index) => {
-                    const examDate = formatDateToInput(new Date(exam.date)); // Format exam date
-            
-                    // Check if the user has submitted the exam
-                    const userSubmission = submittedData.find(sub => sub.examId._id === exam._id);
-            
-                    return (
-                        <div
-                            key={index}
-                            className="bg-white border border-gray-500 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                        >
-                            <h2 className="text-xl font-semibold text-gray-900">{exam.name}</h2>
-                            <div className="grid gap-3 mt-4">
-                                <div className="flex items-center gap-2">
-                                    <FaCalendarAlt className="h-4 w-4 text-gray-500" />
-                                    <span className="text-gray-600">{examDate}</span>
+                    {upcomingExams.map((exam, index) => {
+                        const examDate = formatDateToInput(new Date(exam.date)); // Format exam date
+
+                        // Check if the user has submitted the exam
+                        const userSubmission = submittedData.find(sub => sub.examId._id === exam._id);
+
+                        return (
+                            <div
+                                key={index}
+                                className="bg-white border border-gray-500 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                            >
+                                <h2 className="text-xl font-semibold text-gray-900">{exam.name}</h2>
+                                <div className="grid gap-3 mt-4">
+                                    <div className="flex items-center gap-2">
+                                        <FaCalendarAlt className="h-4 w-4 text-gray-500" />
+                                        <span className="text-gray-600">{examDate}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <FaClock className="h-4 w-4 text-gray-500" />
+                                        <span className="text-gray-600">{exam.duration + " duration (min)"}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <FaQuestionCircle className="h-4 w-4 text-gray-500" />
+                                        <span className="text-gray-600">{exam.totalQuestions + " No of Questions"}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <FaPencilAlt className="h-4 w-4 text-gray-500" />
+                                        <span className="text-gray-600">{exam.totalMarks + " Marks"}</span>
+                                    </div>
+                                    {exam.description && (
+                                        <p className="mt-2 text-sm text-gray-600 truncate max-w-xs">{exam.description}</p>
+                                    )}
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <FaClock className="h-4 w-4 text-gray-500" />
-                                    <span className="text-gray-600">{exam.duration + " duration (min)"}</span>
+
+                                <div className="mt-6 text-center">
+                                    <button
+                                        className={`px-4 py-2 ${userSubmission ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-blue-500 to-indigo-700 text-white font-semibold'} rounded-md transition`}
+                                        onClick={() => userSubmission ? null : handleView(exam._id)} // Prevent click if already submitted
+                                        disabled={!!userSubmission} // Disable if there's a submission
+                                    >
+                                        {userSubmission ? "Exam Submitted" : (examDate === todayDate ? "Take Exam" : "Wait for the day")}
+                                    </button>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <FaQuestionCircle className="h-4 w-4 text-gray-500" />
-                                    <span className="text-gray-600">{exam.totalQuestions + " No of Questions"}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <FaPencilAlt className="h-4 w-4 text-gray-500" />
-                                    <span className="text-gray-600">{exam.totalMarks + " Marks"}</span>
-                                </div>
-                                {exam.description && (
-                                    <p className="mt-2 text-sm text-gray-600 truncate max-w-xs">{exam.description}</p>
-                                )}
                             </div>
-            
-                            <div className="mt-6 text-center">
-                                <button
-                                    className={`px-4 py-2 ${userSubmission ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-blue-500 to-indigo-700 text-white font-semibold'} rounded-md transition`}
-                                    onClick={() => userSubmission ? null : handleView(exam._id)} // Prevent click if already submitted
-                                    disabled={!!userSubmission} // Disable if there's a submission
-                                >
-                                    {userSubmission ? "Exam Submitted" : (examDate === todayDate ? "Take Exam" : "Wait for the day")}
-                                </button>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-            
+                        );
+                    })}
+                </div>
+
             )}
         </div>
     );

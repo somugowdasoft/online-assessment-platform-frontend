@@ -19,26 +19,26 @@ const StudentDashboardPage = () => {
             .finally(() => setIsLoading(false));
     };
 
-    const loadExams = () => {
-        const cachedData = localStorage.getItem('submitedData');
-        if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            dispatch({
-                type: 'GET_SUBMIT_SUCCESS',
-                payload: parsedData,
-            });
-            setIsLoading(false);
-        } else {
-            fetchExams();
-        }
-    };
-
     useEffect(() => {
+        const loadExams = () => {
+            const cachedData = localStorage.getItem('submitedData');
+            if (cachedData) {
+                const parsedData = JSON.parse(cachedData);
+                dispatch({
+                    type: 'GET_SUBMIT_SUCCESS',
+                    payload: parsedData,
+                });
+                setIsLoading(false);
+            } else {
+                fetchExams();
+            }
+        };
+
         if (!hasFetchedExams.current) {
             loadExams();
             hasFetchedExams.current = true;
         }
-    }, [dispatch]);
+    }, [dispatch]); // Removed loadExams from dependencies
 
     useEffect(() => {
         if (submitedData?.length) {
