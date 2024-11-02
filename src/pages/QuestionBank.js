@@ -85,11 +85,12 @@ const QuestionBank = () => {
         setIsLoading(true);
         if (editing) {
             dispatch(updateQuestion(editing, formData));
+            dispatch(getQuestions());
             setEditing(null);
         } else {
             dispatch(createQuestion(formData));
+            dispatch(getQuestions());
         }
-        dispatch(getQuestions());
         setFormData({ question: '', options: ['', '', '', ''], correctAnswer: '', difficulty: '', exam: '', questionType: '', examId: "" });
         setIsLoading(false);
     };
@@ -102,7 +103,7 @@ const QuestionBank = () => {
 
 
     // Handle for edit the question
-    const handleEdit = (question) => {        
+    const handleEdit = (question) => {
         setEditing(question._id);
         setFormData(question);
     };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle, FaUserCircle } from 'react-icons/fa'; // Icons from react-icons
+import { FaHome, FaUser, FaCog, FaCalendarDay, FaUserGraduate, FaRegQuestionCircle, FaUserCircle, FaChartLine } from 'react-icons/fa'; // Icons from react-icons
 import { useSelector } from 'react-redux';
 
 const Sidebar = (props) => {
@@ -45,7 +45,10 @@ const Sidebar = (props) => {
                                 <NavItem icon={<FaUserGraduate />} name="Students List" path="students" />
                             </>
                         ) : (
-                            <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
+                            <>
+                              <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
+                              <NavItem icon={<FaChartLine />} name="Results" path="results" />
+                            </>               
                         )}
                     </nav>
                 </div>

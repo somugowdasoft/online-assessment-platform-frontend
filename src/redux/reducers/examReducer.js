@@ -2,6 +2,7 @@ import { CREATE_EXAM, GET_EXAMS, CREATE_EXAM_FAIL, GET_EXAM_FAIL, DELETE_EXAM, D
 
 const initialState = {
     exams: [],
+    submittedData: [],
     examDetails: [],
     isLoading: false,
     error: null,
@@ -10,7 +11,7 @@ const initialState = {
 export const examReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_EXAMS:
-            return { ...state, exams: action.payload };
+            return { ...state, exams: action.payload.exams, submittedData: action.payload.submittedData };
         case GET_EXAM_BY_ID:
             return { ...state, examDetails: action.payload }
         case CREATE_EXAM:

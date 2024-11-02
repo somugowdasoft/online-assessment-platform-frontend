@@ -53,12 +53,12 @@ const ExamView = () => {
         <div className="container mx-auto p-4">
             {/* Exam Details */}
             <div className="bg-white shadow-md rounded-lg p-6 mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Exam: {examDetails?.examDetails?.name || 'N/A'}</h2>
-                <p className="text-gray-600 mb-2">Date: {examDetails?.examDetails?.date ? new Date(examDetails.examDetails.date).toLocaleDateString() : 'N/A'}</p>
-                <p className="text-gray-600 mb-2">Duration: {examDetails?.examDetails?.duration || 'N/A'} minutes</p>
-                <p className="text-gray-600 mb-2">Total Marks: {examDetails?.examDetails?.totalMarks || 'N/A'}</p>
-                <p className="text-gray-600 mb-2">Total Questions: {examDetails?.examDetails?.totalQuestions || 'N/A'}</p>
-                <p className="text-gray-600">Description: {examDetails?.examDetails?.description || 'No description available.'}</p>
+                <h2 className="text-2xl font-semibold mb-2">Exam: {examDetails?.examData?.name || 'N/A'}</h2>
+                <p className="text-gray-600 mb-2">Date: {examDetails?.examData?.date ? new Date(examDetails.examData.date).toLocaleDateString() : 'N/A'}</p>
+                <p className="text-gray-600 mb-2">Duration: {examDetails?.examData?.duration || 'N/A'} minutes</p>
+                <p className="text-gray-600 mb-2">Total Marks: {examDetails?.examData?.totalMarks || 'N/A'}</p>
+                <p className="text-gray-600 mb-2">Total Questions: {examDetails?.examData?.totalQuestions || 'N/A'}</p>
+                <p className="text-gray-600">Description: {examDetails?.examData?.description || 'No description available.'}</p>
             </div>
 
             {/* Questions List */}

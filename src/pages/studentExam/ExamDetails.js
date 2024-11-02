@@ -32,6 +32,11 @@ const ExamDetails = () => {
         fetchExam();
     }, [dispatch, id]);
 
+    // Handle view exam
+    const handleView = (id) => {
+        navigate(`/student/dashboard/start-assessment/${id}`);
+    };
+
     // Show loading spinner if still fetching the data
     if (loading) {
         return (
@@ -65,19 +70,19 @@ const ExamDetails = () => {
 
     return (
         <div className="p-6 pb-16 max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold text-blue-500 mb-4">{examDetails?.examDetails?.name} Assessment</h1>
-            <p className="text-lg text-gray-700 mb-6">{examDetails?.examDetails?.description}</p>
+            <h1 className="text-3xl font-bold text-blue-500 mb-4">{examDetails?.examData?.name} Assessment</h1>
+            <p className="text-lg text-gray-700 mb-6">{examDetails?.examData?.description}</p>
             <hr />
             <h2 className="text-xl mt-2 font-semibold text-gray-900 mb-4">Assessment Details</h2>
             <ul className="mb-6 text-gray-700">
                 <li>
-                    <strong>Marks:</strong> {examDetails?.examDetails?.totalMarks + " marks."}
+                    <strong>Marks:</strong> {examDetails?.examData?.totalMarks + " marks."}
                 </li>
                 <li>
-                    <strong>Questions:</strong> {examDetails?.examDetails?.totalQuestions + " Nos."}
+                    <strong>Questions:</strong> {examDetails?.examData?.totalQuestions + " Nos."}
                 </li>
                 <li>
-                    <strong>Duration:</strong> {examDetails?.examDetails?.duration} minutes.
+                    <strong>Duration:</strong> {examDetails?.examData?.duration} minutes.
                 </li>
             </ul>
 
@@ -94,15 +99,16 @@ const ExamDetails = () => {
             {/* Integrate Proctoring Info */}
             <ProctoringInfo />
 
-            <div className="flex justify-around mt-6 text-center">
+            <div className="flex flex-wrap justify-around mt-6 text-center sm:gap-5">
                 <GoBackButton />
                 <button
                     className="px-4 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition"
-                    onClick={() => navigate(`/start-assessment/${id}`)}
+                    onClick={() => handleView(id)}
                 >
                     Agree and Start Assessment
                 </button>
             </div>
+
         </div>
     );
 };

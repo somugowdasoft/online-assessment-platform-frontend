@@ -20,6 +20,8 @@ import ExamView from './components/ExamView';
 import StudentDashboardPage from './pages/studentPages/StudentDashboardPage';
 import UpcomingExams from './pages/studentPages/UpcomingExams';
 import ExamDetails from './pages/studentExam/ExamDetails';
+import ExamInterface from './pages/studentExam/ExamInterface';
+import Results from './pages/studentExam/Results';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -40,6 +42,8 @@ function App() {
           <Route path="profile" element={<ProfileUpdate />} />
           <Route path="exams" element={<UpcomingExams />} />
           <Route path="exam-details/:id" element={<ExamDetails />} />
+          <Route path="start-assessment/:id" element={<ExamInterface />} />
+          <Route path="results" element={<Results />} />
         </Route>
 
         <Route path="/admin/dashboard" element={isAuthenticated && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} >

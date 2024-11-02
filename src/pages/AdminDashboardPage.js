@@ -30,12 +30,13 @@ const AdminDashboardPage = () => {
     }
   }, [dispatch]); // Dependency array includes dispatch
 
-  // Filter upcoming exams (exams with a date in the future)
-  const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) > new Date()) : [];
 
   // Filter active exams (exams with a date today)
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+  
+  // Filter upcoming exams (exams with a date in the future)
+  const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) >= today) : [];
 
   const activeExams = exams ? exams.filter(exam => {
     const examDate = new Date(exam.date);

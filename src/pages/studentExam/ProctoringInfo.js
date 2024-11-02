@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaVideo, FaMicrophoneAltSlash} from 'react-icons/fa';
 
 const ProctoringInfo = () => {
   return (
@@ -8,7 +9,11 @@ const ProctoringInfo = () => {
         To maintain the integrity of the exam, the following proctoring measures will be in place:
       </p>
       <ul className="list-disc list-inside text-gray-700">
-        <li>Video monitoring will be enabled throughout the exam.</li>
+        <li className="flex items-center">
+        {'→'} Video monitoring will be enabled throughout the exam.
+          <FaVideo className="ml-1 w-8" />
+          <FaMicrophoneAltSlash className="ml-1 w-6" />
+        </li>
         <li>Browser lockdown will prevent access to other tabs and applications.</li>
         <li>Identity verification will occur before the exam starts.</li>
         <li>Behavior detection tools will flag any suspicious activities during the exam.</li>
