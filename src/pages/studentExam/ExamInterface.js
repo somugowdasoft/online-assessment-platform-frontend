@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +26,7 @@ const ExamInterface = () => {
     const [error, setError] = useState(null);
 
     // Initialize exam and verify requirements
-    const initializeExam = async () => {
+    const initializeExam = useCallback(async () => {
         try {
             let duration = examData.duration;
             setTimeLeft(duration * 60); // Convert minutes to seconds
@@ -38,33 +38,34 @@ const ExamInterface = () => {
             ]);
 
         } catch (error) {
-            console.error('Failed to initialize exam:', error);
+            setError(error);
+            console.error('Failed to fetch exams:', error);
         }
-    };
+    }, [examData]);
 
-    // Fetch the exam by ID when the component mounts
-    const fetchExam = async () => {
+    const fetchExams = useCallback(async () => {
         try {
             setLoading(true);  // Set loading true when fetching starts
             await dispatch(getExamById(id)); // Fetch exam by ID
             await initializeExam();          // Initialize exam
-        } catch (err) {
-            setError('Failed to load exam details.'); // Set error message
+        } catch (error) {
+            setError(error);
+            console.error('Failed to fetch exams:', error);
         } finally {
             setLoading(false);  // Set loading to false once fetch is complete
         }
-    };
+    }, [dispatch, id, initializeExam]);
 
     // Get exam data
     useEffect(() => {
         const fetchData = async () => {
             if (!hasFetchedExams.current) {
-                await fetchExam();  // Fetch exams only on initial mount
+                await fetchExams();  // Fetch exams only on initial mount
                 hasFetchedExams.current = true; // Mark as fetched
             }
         };
         fetchData();  // Call the async fetch function
-    }, [dispatch]); // Dependency array includes dispatch
+    }, [dispatch, fetchExams]); // Dependency array includes dispatch
 
     // Timer countdown
     useEffect(() => {
@@ -78,6 +79,23 @@ const ExamInterface = () => {
         }
     }, [timeLeft, examStatus]);
 
+    const handleSuspiciousActivity = useCallback(async () => {
+        try {
+            await axios.post('/api/proctor/incident', {
+                examId: id,
+                timestamp: new Date(),
+            });
+
+            setWarningCount(prev => prev + 1);
+            if (warningCount >= 3) {
+                submitExam();
+            }
+        } catch (error) {
+            console.error('Failed to report suspicious activity:', error);
+        }
+    }, [id, warningCount]);
+
+
     // Monitor fullscreen
     useEffect(() => {
         const handleFullscreenChange = () => {
@@ -89,7 +107,20 @@ const ExamInterface = () => {
 
         document.addEventListener('fullscreenchange', handleFullscreenChange);
         return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    }, [examStatus]);
+    }, [examStatus, handleSuspiciousActivity]);
+
+    const sendActivityData = useCallback(async (screenshot) => {
+        try {
+            await axios.post('/api/proctor/activity', {
+                examId: id,
+                screenshot,
+                timestamp: new Date(),
+                tabFocused: document.hasFocus(),
+            });
+        } catch (error) {
+            console.error('Failed to send activity data:', error);
+        }
+    }, [id]);
 
     // Periodic screenshot and activity monitoring
     useEffect(() => {
@@ -103,37 +134,8 @@ const ExamInterface = () => {
 
             return () => clearInterval(monitoring);
         }
-    }, [examStatus]);
+    }, [examStatus, sendActivityData]);
 
-    const handleSuspiciousActivity = async (reason) => {
-        try {
-            await axios.post('/api/proctor/incident', {
-                examId: id,
-                reason,
-                timestamp: new Date(),
-            });
-
-            setWarningCount(prev => prev + 1);
-            if (warningCount >= 3) {
-                submitExam();
-            }
-        } catch (error) {
-            console.error('Failed to report suspicious activity:', error);
-        }
-    };
-
-    const sendActivityData = async (screenshot) => {
-        try {
-            await axios.post('/api/proctor/activity', {
-                examId: id,
-                screenshot,
-                timestamp: new Date(),
-                tabFocused: document.hasFocus(),
-            });
-        } catch (error) {
-            console.error('Failed to send activity data:', error);
-        }
-    };
 
     //handle all answers from student
     const handleAnswerChange = (questionId, answer, questionType) => {
@@ -158,7 +160,7 @@ const ExamInterface = () => {
 
     const submitExams = async () => {
         try {
-           const submitData = {
+            const submitData = {
                 examId: id,
                 answers,
                 warningCount,

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createQuestion, getQuestions, updateQuestion, deleteQuestion } from '../redux/actions/questionActions';
 import { getExams } from '../redux/actions/examActions';
@@ -26,12 +26,16 @@ const QuestionBank = () => {
     const [editing, setEditing] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const fetchExams = () => {
-        setIsLoading(true);
-        dispatch(getExams());
-        dispatch(getQuestions());
-        setIsLoading(false);
-    };
+    const fetchExams = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            dispatch(getExams());
+            dispatch(getQuestions());
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch exams:', error);
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         if (!hasFetchedExams.current) {
@@ -39,7 +43,7 @@ const QuestionBank = () => {
             dispatch(getQuestions());  // Fetch questions only on initial mount
             hasFetchedExams.current = true; // Mark as fetched
         }
-    }, [dispatch]);
+    }, [dispatch, fetchExams]);
 
     const handleChange = async (e) => {
         const { name, value } = e.target;

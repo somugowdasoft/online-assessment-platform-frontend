@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 // Import icons 
 import { FaUsers as Users, FaBookOpen as BookOpen, FaChartBar as BarChart, FaCalendar as Calendar } from 'react-icons/fa';
 // Import components
@@ -17,24 +17,27 @@ const AdminDashboardPage = () => {
   const dispatch = useDispatch();
   const hasFetchedExams = useRef(false);
 
-  // Get exams and students
-  const fetchExams = () => {
-    dispatch(getExams());
-    dispatch(getAllStudents());
-  };
+  const fetchExams = useCallback(async () => {
+    try {
+      dispatch(getExams());
+      dispatch(getAllStudents());
+    } catch (error) {
+      console.error('Failed to fetch exams:', error);
+    }
+  }, [dispatch]); 
 
   useEffect(() => {
     if (!hasFetchedExams.current) {
       fetchExams(); // Fetch exams only on initial mount
       hasFetchedExams.current = true; // Mark as fetched
     }
-  }, [dispatch]); // Dependency array includes dispatch
+  }, [dispatch, fetchExams]); // Dependency array includes dispatch
 
 
   // Filter active exams (exams with a date today)
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
-  
+
   // Filter upcoming exams (exams with a date in the future)
   const upcomingExams = exams ? exams.filter(exam => new Date(exam.date) >= today) : [];
 

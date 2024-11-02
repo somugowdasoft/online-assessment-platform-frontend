@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,14 +10,17 @@ const StudentDashboardPage = () => {
     const dispatch = useDispatch();
     const hasFetchedExams = useRef(false);
 
-    const fetchExams = () => {
-        setIsLoading(true);
-        dispatch(getSubmited())
-            .catch((error) => {
-                console.error("Error fetching submitted exams:", error);
-            })
-            .finally(() => setIsLoading(false));
-    };
+    const fetchExams = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            dispatch(getSubmited())
+        } catch (error) {
+            console.error("Error fetching submitted exams:", error);
+        } finally {
+            setIsLoading(false)
+        };
+    }, [dispatch]);
+
 
     useEffect(() => {
         const loadExams = () => {
@@ -38,7 +41,7 @@ const StudentDashboardPage = () => {
             loadExams();
             hasFetchedExams.current = true;
         }
-    }, [dispatch]); // Removed loadExams from dependencies
+    }, [dispatch, fetchExams]); // Removed loadExams from dependencies
 
     useEffect(() => {
         if (submitedData?.length) {

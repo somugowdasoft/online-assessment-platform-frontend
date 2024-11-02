@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback,useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createExam, deleteExam, getExams, updateExam } from '../redux/actions/examActions';
 import { ToastContainer } from 'react-toastify';
@@ -19,20 +19,23 @@ const ExamScheduling = () => {
     // State for search query
     const [searchQuery, setSearchQuery] = useState('');
 
-    //get exams
-    const fetchExams = () => {
-        setIsLoading(true);
-        dispatch(getExams());
-        setSearchQuery("");
-        setIsLoading(false);
-    };
+    const fetchExams = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            dispatch(getExams());
+            setSearchQuery("");
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch exams:', error);
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         if (!hasFetchedExams.current) {
             fetchExams();  // Fetch exams only on initial mount
             hasFetchedExams.current = true; // Mark as fetched
         }
-    }, [dispatch]); // Dependency array includes dispatch
+    }, [dispatch, fetchExams]); // Dependency array includes dispatch
 
 
     const handleChange = (e) => {
