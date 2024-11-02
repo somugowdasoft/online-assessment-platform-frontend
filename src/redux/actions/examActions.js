@@ -13,7 +13,7 @@ import {
 
 // Base configuration for Axios
 const API = axios.create({
-  baseURL: process.env.BACKEND_URL || 'http://localhost:5000/api/exam'  // Replace with your backend API URL
+  baseURL: process.env.BACKEND_URL || 'https://online-assessment-platform-backend-cmgj.onrender.com/api/exam'  // Replace with your backend API URL
 });
 
 // Add a request interceptor
