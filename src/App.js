@@ -22,6 +22,7 @@ import UpcomingExams from './pages/studentPages/UpcomingExams';
 import ExamDetails from './pages/studentExam/ExamDetails';
 import ExamInterface from './pages/studentExam/ExamInterface';
 import Results from './pages/studentExam/Results';
+import StudentResult from './components/StudentResults';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -53,6 +54,7 @@ function App() {
           <Route path="exams/:id" element={<ExamView />} />
           <Route path="questions" element={<QuestionBank />} />
           <Route path="students" element={<StudentsList />} />
+          <Route path="student-result/:id" element={<StudentResult />} />
         </Route>
 
         {/* Add the ErrorPage route */}

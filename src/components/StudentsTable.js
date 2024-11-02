@@ -1,6 +1,6 @@
-import { FaTrash } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 
-const StudentTable = ({ students, isLoading, togglePermission, onDelete }) => {
+const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView }) => {
 
     return (
         <div className="container p-4 max-w-full overflow-x-auto">
@@ -17,6 +17,7 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete }) => {
                                         <th className="py-2 px-4 border">Name</th>
                                         <th className="py-2 px-4 border">Email</th>
                                         <th className="py-2 px-4 border">Exam Permission</th>
+                                        <th className="py-2 px-4 border">View Result</th>
                                         <th className="py-2 px-4 border">Actions</th>
                                     </tr>
                                 </thead>
@@ -38,6 +39,15 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete }) => {
                                             </td>
                                             <td className="px-4 py-2 border text-center">
                                                 <button
+                                                    onClick={() => onView(student._id)}
+                                                    className="text-blue-500 hover:text-blue-700 mr-3"
+                                                    aria-label="View"
+                                                >
+                                                    <FaEye />
+                                                </button>
+                                            </td>
+                                            <td className="px-4 py-2 border text-center">
+                                                <button
                                                     onClick={() => onDelete(student._id)}
                                                     className="text-red-500 hover:text-red-700"
                                                     aria-label="Delete"
@@ -54,8 +64,9 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete }) => {
                         <p className="text-center text-gray-500">No students added yet</p>
                     )}
                 </>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 

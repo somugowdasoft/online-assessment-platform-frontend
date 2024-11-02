@@ -1,11 +1,10 @@
 // actions/examActions.js
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import ErrorHandler from '../../components/ErrorHandler';
 
 // Base configuration for Axios
 const API = axios.create({
-    baseURL: process.env.BACKEND_URL || 'http://localhost:5000/api/exam'  // Replace with your backend API URL
+    baseURL: process.env.BACKEND_URL || 'http://localhost:5000/api/result'  // Replace with your backend API URL
 });
 
 // Add a request interceptor
@@ -26,39 +25,18 @@ API.interceptors.request.use(
     }
 );
 
-
-// Thunk action to submit the exam
-export const submitExam = (examData) => async (dispatch) => {
+//get single student result
+export const getStudentResult = (id) => async (dispatch) => {
     try {
-        const { data } = await API.post('/submit', examData);
-        toast.success(data?.message || 'submitted successfully');
+        const { data } = await API.get(`/${id}`);        
         dispatch({
-            type: 'EXAM_SUBMIT_SUCCESS',
+            type: 'GET_RESULT_SUCCESS',
             payload: data,
         });
 
     } catch (error) {
         dispatch({
-            type: 'EXAM_SUBMIT_FAIL',
-            payload: error.response && error.response.data.message
-                ? error.response.data.message
-                : error.message,
-        });
-        <ErrorHandler error={error} />
-    }
-};
-
-export const getSubmited = () => async (dispatch) => {
-    try {
-        const { data } = await API.get('/submit');
-        dispatch({
-            type: 'GET_SUBMIT_SUCCESS',
-            payload: data,
-        });
-
-    } catch (error) {
-        dispatch({
-            type: 'GET_SUBMIT_FAIL',
+            type: 'GET_RESULT_FAIL',
             payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message,
