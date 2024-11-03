@@ -51,7 +51,7 @@ export const login = (userData) => async (dispatch) => {
     localStorage.setItem('token', JSON.stringify(response.data?.token));
     return response.data;  // Return the response for successful login
   } catch (error) {
-    toast.error(error.response?.data?.message || error.response?.data );
+    toast.error(error.response?.data?.message || error.response?.data);
     dispatch({ type: 'LOGIN_FAIL', payload: error.response.data });
     <ErrorHandler error={error} />
   }
@@ -61,6 +61,7 @@ export const login = (userData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('user'); // Clear user data from localStorage
   localStorage.removeItem('token');
+  localStorage.removeItem('submitedData');
   dispatch({ type: 'LOGOUT' });
   toast.success('Logout successful');
   return { message: 'Logout successful' };
