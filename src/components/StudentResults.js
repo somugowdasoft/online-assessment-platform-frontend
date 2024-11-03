@@ -62,7 +62,9 @@ const StudentResult = () => {
         results?.results.map((result) => (
           <div key={result._id} className="mb-6 border p-4 rounded-lg shadow hover:shadow-md transition-shadow duration-300">
             <h2 className="text-lg font-medium mb-2">Exam: {result.exam.name}</h2>
-            <div className="grid grid-cols-2 gap-4">
+
+            {/* Responsive grid for mobile, tablet, and desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <p><strong>Exam ID:</strong> {result.examId}</p>
               <p><strong>Submitted At:</strong> {new Date(result.submittedAt).toLocaleString()}</p>
               <p><strong>Total Questions:</strong> {result.totalQuestions}</p>
@@ -70,8 +72,14 @@ const StudentResult = () => {
               <p><strong>Percentage:</strong> {((result.correctAnswers / result.totalQuestions) * 100).toFixed(2)}%</p>
               <p><strong>Grade:</strong> {result.grade}</p>
               <p><strong>Warning Count:</strong> {result.warningCount}</p>
+              <p
+                className={`p-2 text-white rounded-lg w-36 ${((result.correctAnswers / result.totalQuestions) * 100) >= 35 ? 'bg-green-500' : 'bg-red-500'}`}
+              >
+                <strong>Status:</strong> {((result.correctAnswers / result.totalQuestions) * 100) >= 35 ? 'Passed' : 'Failed'}
+              </p>
             </div>
           </div>
+
         ))
       )}
     </div>

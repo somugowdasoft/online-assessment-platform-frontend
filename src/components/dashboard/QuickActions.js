@@ -19,7 +19,7 @@ const QuickActions = () => {
           Manage Question Banks
         </Link>
         <Link
-          to="results"
+          to="students"
           className="bg-purple-500 text-white rounded-lg p-2 text-center hover:bg-purple-600"
         >
           View Results
