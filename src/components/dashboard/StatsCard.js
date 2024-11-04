@@ -9,7 +9,7 @@ const StatsCard = ({ title, value, icon: Icon, trend, bgColor }) => {
                     <p className="text-black text-sm">{title}</p>
                     <h3 className="text-2xl font-bold mt-2">{value}</h3>
                     {title === "Total Students" ? (
-                        <Link to="students" className="text-white text-sm hover:underline">
+                        <Link to="students" className="text-black text-sm hover:underline">
                             View Students {'→'}
                         </Link>
                     ) : (
