@@ -38,7 +38,7 @@ const ExamInterface = () => {
             ]);
 
         } catch (error) {
-            setError(error);
+            // setError(error);
             console.error('Failed to fetch exams:', error);
         }
     }, [examData]);
