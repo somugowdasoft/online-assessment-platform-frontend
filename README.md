@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Online Assessment Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Online Assessment Platform is a full-stack MERN (MongoDB, Express, React, Node.js) web application designed to facilitate comprehensive online exams. It includes features for question banks, automated grading, result analysis, exam scheduling, proctoring, and detailed analytics. The platform provides two roles: Admin and Student. Admins manage exams, questions, grading, and students, while students can participate in exams, view results, and track progress.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Admin Features:
+- **Question Bank Management**: Create, edit, and manage questions.
+- **Automated Grading**: Auto-grade exams based on predefined answers.
+- **Result Analysis**: View detailed analytics on student performance.
+- **Exam Scheduling**: Schedule exams and manage timing and availability.
+- **Proctoring**: Monitor students during exams.
+- **User Management**: Manage student profiles, roles, and permissions.
 
-### `npm start`
+### Student Features:
+- **Exam Participation**: Take exams as scheduled by the admin.
+- **Result Viewing**: View exam results and grading breakdowns.
+- **Progress Tracking**: Analyze individual performance and track progress.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Frontend:
+- **React.js**: For building the user interface.
+- **Redux-Thunk**: Middleware for managing state with asynchronous actions.
+- **React-Router**: For navigation between admin and student dashboards.
+- **Tailwind CSS**: For styling and responsiveness.
 
-### `npm test`
+### Backend:
+- **Node.js**
+- **Express.js**
+- **MongoDB**: (with Mongoose ORM)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Authentication:
+- **JWT**: For securing routes, role-based access control for admin and student functionalities.
 
-### `npm run build`
+### State Management:
+- **Redux-Thunk**: For handling asynchronous operations.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### API Testing:
+- **Postman**: For testing API routes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Node.js** (v14+)
+- **MongoDB** installed locally or use **MongoDB Atlas** for a cloud-based solution.
 
-### `npm run eject`
+## Common Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Frontend Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/somugowdasoft/online-assessment-platform-frontend.git
+   cd frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Install Dependencies:**
 
-## Learn More
+```bash
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. **Environment Variables:** Create a .env file in the root of your frontend directory and configure:
+```bash
+REACT_APP_API_URL=https://online-assessment-platform-backend-cmgj.onrender.com
+```
 
-### Code Splitting
+4. **Start the Application:**
+``` bash
+npm start 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Frontend Tech Overview**
+**React.js:** For building the user interface.
+**Redux-Thunk:** Middleware for managing state with asynchronous actions.
+**React-Router:** For navigation between admin and student dashboards.
+**Tailwind CSS:** For styling and responsiveness.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Admin and Student Views**
+**Admin:** Has access to dashboard sections for managing exams, students, and analytics.
+**Student:** Can access exams, view results, and track performance.
