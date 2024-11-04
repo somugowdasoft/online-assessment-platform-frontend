@@ -1,5 +1,6 @@
 const initialState = {
     students: [],
+    activity: []
 };
 
 //students reducer
@@ -16,6 +17,16 @@ export const studentReducer = (state = initialState, action) => {
                     student._id === action.payload.id ? { ...student, examPermission: action.payload.permission } : student
                 ),
             };
+        case "CREATE_STUDENTS_ACTIVITY":
+            return {
+                ...state,
+                activity: action.payload
+            };
+        case "GET_STUDENTS_ACTIVITY":
+            return {
+                ...state,
+                activity: action.payload
+            }
         default:
             return state;
     }

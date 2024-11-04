@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getExamById } from '../../redux/actions/examActions';
 import GoBackButton from '../../components/GoBackButton';
 import { submitExam } from '../../redux/actions/submitExam';
+import { createStudentsActivity } from '../../redux/actions/studentActions';
 
 const ExamInterface = () => {
 
@@ -15,6 +16,7 @@ const ExamInterface = () => {
     const { id } = useParams();  // Get the exam ID from the URL
     const { examDetails } = useSelector(state => state.exams);
     const { examData, questions } = examDetails;
+    const { user } = useSelector((state) => state.auth);
 
     const [answers, setAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(null);
@@ -165,9 +167,18 @@ const ExamInterface = () => {
                 answers,
                 warningCount,
             }
-            await dispatch(submitExam(submitData))
+            await dispatch(submitExam(submitData));
+            let activityData = {
+                acivityType: "submitted exam",
+                examId: id,
+                exam: examData.name,
+                name: user.name,
+                email: user.email,
+                userId: user.id
+            }
+            await dispatch(createStudentsActivity(activityData));
             setExamStatus('submitted');
-            document.exitFullscreen();
+            document && document?.exitFullscreen();
         } catch (error) {
             console.error('Failed to submit exam:', error);
         }
@@ -193,24 +204,6 @@ const ExamInterface = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 p-4">
-            {/* {examStatus === 'waiting' && (
-                <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded">
-                    <h2 className="text-2xl font-bold mb-4">Exam Requirements</h2>
-                    <ul className="list-disc ml-6 mb-6">
-                        <li>Working webcam</li>
-                        <li>Stable internet connection</li>
-                        <li>Quiet environment</li>
-                        <li>Photo ID for verification</li>
-                    </ul>
-                    <button
-                        onClick={initializeExam}
-                        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-                    >
-                        Start Exam
-                    </button>
-                </div>
-            )} */}
-
             {examStatus === 'started' && (
                 <div className="flex flex-col items-center">
                     <div className="fixed top-4 right-4 bg-white p-4 rounded shadow">
@@ -299,13 +292,15 @@ const ExamInterface = () => {
             )}
 
             {examStatus === 'submitted' && (
-                <div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center">
+                <div className="flex flex-col items-center justify-center min-h-screen">
+                    <div className="text-center mb-6">
                         <h2 className="text-2xl font-bold mb-4">Exam Submitted Successfully</h2>
                         <p>Thank you for completing the exam.</p>
                     </div>
+                    <GoBackButton path={"/student/dashboard/exams"} />
                 </div>
             )}
+
         </div>
     );
 };

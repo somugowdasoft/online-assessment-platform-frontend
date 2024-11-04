@@ -55,3 +55,24 @@ export const updateExamPermission = (id, permission) => async (dispatch) => {
         <ErrorHandler error={error} />
     }
 };
+
+//create students activities
+export const createStudentsActivity = (activityData) => async (dispatch) => {
+    try {
+        const { data } = await API.post('/activity', activityData);
+        dispatch({ type: 'CREATE_STUDENTS_ACTIVITY', payload: data });
+    } catch (error) {
+        console.error(error);
+        <ErrorHandler error={error} />
+    }
+};
+
+export const getStudentsActivity = () => async (dispatch) => {
+    try {
+        const { data } = await API.get('/activity');
+        dispatch({ type: 'GET_STUDENTS_ACTIVITY', payload: data });
+    } catch (error) {
+        console.error(error);
+        <ErrorHandler error={error} />
+    }
+};

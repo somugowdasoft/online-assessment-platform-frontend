@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 
-const GoBackButton = () => {
+const GoBackButton = ({path}) => {
     const navigate = useNavigate();
 
     const handleGoBack = () => {
-        navigate(-1); // This navigates back to the previous page
+        navigate(path ? path : -1); // This navigates back to the previous page
     };
 
     return (

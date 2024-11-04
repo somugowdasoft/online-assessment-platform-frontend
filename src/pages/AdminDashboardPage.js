@@ -7,24 +7,25 @@ import UpcomingExams from '../components/dashboard/UpcomingExams';
 import RecentActivity from '../components/dashboard/RecentActivity';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExams } from '../redux/actions/examActions';
-import { getAllStudents } from '../redux/actions/studentActions';
+import { getAllStudents, getStudentsActivity } from '../redux/actions/studentActions';
 import QuickActions from '../components/dashboard/QuickActions';
 
 const AdminDashboardPage = () => {
   const { exams } = useSelector(state => state.exams);
-  const { students } = useSelector(state => state.studentState);
+  const { students, activity } = useSelector(state => state.studentState);
 
   const dispatch = useDispatch();
   const hasFetchedExams = useRef(false);
 
   const fetchExams = useCallback(async () => {
     try {
-      dispatch(getExams());
-      dispatch(getAllStudents());
+      await dispatch(getExams());
+      await dispatch(getAllStudents());
+      await dispatch(getStudentsActivity());
     } catch (error) {
       console.error('Failed to fetch exams:', error);
     }
-  }, [dispatch]); 
+  }, [dispatch]);
 
   useEffect(() => {
     if (!hasFetchedExams.current) {
@@ -62,7 +63,7 @@ const AdminDashboardPage = () => {
   return (
     <div>
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 pb-16">
         {stats.map((stat) => (
           <StatsCard key={stat.title} {...stat} />
         ))}
@@ -78,7 +79,7 @@ const AdminDashboardPage = () => {
         <UpcomingExams exams={upcomingExams} />
 
         {/* Recent Activity */}
-        <RecentActivity />
+        <RecentActivity activities={activity?.activities} />
       </div>
     </div>
   );

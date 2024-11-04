@@ -84,7 +84,7 @@ const UpcomingExams = () => {
                         const examDate = formatDateToInput(new Date(exam.date)); // Format exam date
 
                         // Check if the user has submitted the exam
-                        const userSubmission = submittedData.find(sub => sub.examId._id === exam._id);
+                        const userSubmission = submittedData?.find(sub => sub.examId._id === exam._id);
 
                         return (
                             <div

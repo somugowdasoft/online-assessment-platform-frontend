@@ -5,12 +5,14 @@ import ProctoringInfo from './ProctoringInfo'; // Import the ProctoringInfo comp
 import GoBackButton from '../../components/GoBackButton';
 import { FaSpinner } from 'react-icons/fa';
 import { getExamById } from '../../redux/actions/examActions';
+import { createStudentsActivity } from '../../redux/actions/studentActions';
 
 //exam deatils
 const ExamDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { examDetails } = useSelector(state => state.exams);
+    const { user } = useSelector((state) => state.auth);
 
     const { id } = useParams();  // Get the exam ID from the URL
     const [loading, setLoading] = useState(true);
@@ -33,7 +35,16 @@ const ExamDetails = () => {
     }, [dispatch, id]);
 
     // Handle view exam
-    const handleView = (id) => {
+    const handleView = async (id) => {
+        let activityData = {
+            acivityType: "started exam",
+            examId: id,
+            exam: examDetails?.examData.name,
+            name: user.name,
+            email: user.email,
+            userId: user.id
+        }
+        await dispatch(createStudentsActivity(activityData));
         navigate(`/student/dashboard/start-assessment/${id}`);
     };
 
