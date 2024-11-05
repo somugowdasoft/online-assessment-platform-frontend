@@ -43,7 +43,7 @@ export const createQuestion = (questionData) => async (dispatch) => {
 export const getQuestions = () => async (dispatch) => {
     try {
         const response = await API.get('/');
-        dispatch({ type: GET_QUESTIONS, payload: response.data });
+        await dispatch({ type: GET_QUESTIONS, payload: response?.data });
     } catch (error) {
         toast.error(`Error fetching questions: ${error.response?.data?.message || error.message}`);
         <ErrorHandler error={error} />

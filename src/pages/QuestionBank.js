@@ -11,9 +11,9 @@ const QuestionBank = () => {
     const dispatch = useDispatch();
     const hasFetchedExams = useRef(false);
 
-    const questions = useSelector(state => state.question.questions);
+    const { questions } = useSelector(state => state.question);
     const { exams } = useSelector(state => state.exams);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [formData, setFormData] = useState({
         question: '',
         options: ['', '', '', ''],  // For multiple choice
@@ -25,13 +25,17 @@ const QuestionBank = () => {
     });
     const [editing, setEditing] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [questionType, setQuestionType] = useState("");
+    const [difficultyLevel, setDifficultyLevel] = useState("");
+    const [examType, setExamType] = useState("");
+    const [filteredQuestions, setFilteredQuestions] = useState(questions);
 
+    //fetch exams and questions
     const fetchExams = useCallback(async () => {
         try {
             setIsLoading(true);
             dispatch(getExams());
-            dispatch(getQuestions());
-            setIsLoading(false);
+            dispatch(getQuestions()).finally(() => setIsLoading(false));
         } catch (error) {
             console.error('Failed to fetch exams:', error);
         }
@@ -44,6 +48,11 @@ const QuestionBank = () => {
             hasFetchedExams.current = true; // Mark as fetched
         }
     }, [dispatch, fetchExams]);
+
+    //initail questions
+    useEffect(() => {
+        setFilteredQuestions(questions); // Update filteredQuestions when questions change
+    }, [questions]);
 
     const handleChange = async (e) => {
         const { name, value } = e.target;
@@ -73,6 +82,7 @@ const QuestionBank = () => {
         }
     };
 
+    //handle question type
     const handleQuestionTypeChange = (e) => {
         setFormData(prev => ({
             ...prev,
@@ -102,9 +112,23 @@ const QuestionBank = () => {
     //handle search
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        // Filter questions by name or other criteria based on the search input
+        filterQuestions(e.target.value, questionType, difficultyLevel, examType);
     };
-
+    //handle type change
+    const handleTypeChange = (e) => {
+        setQuestionType(e.target.value);
+        filterQuestions(searchQuery, e.target.value, difficultyLevel, examType);
+    };
+    //hanlde difficulty 
+    const handleDifficultyChange = (e) => {
+        setDifficultyLevel(e.target.value);
+        filterQuestions(searchQuery, questionType, e.target.value, examType);
+    };
+    //handle exam
+    const handleExamChange = (e) => {
+        setExamType(e.target.value);
+        filterQuestions(searchQuery, questionType, difficultyLevel, e.target.value);
+    };
 
     // Handle for edit the question
     const handleEdit = (question) => {
@@ -121,10 +145,17 @@ const QuestionBank = () => {
     };
 
     // Filter exams based on the search query
-    const filteredQuestions = questions.filter((question) => {
-        // Check if question and question.question are defined
-        return question && question.question && question.question.toLowerCase().includes(searchQuery.toLowerCase());
-    });
+    const filterQuestions = (search, type, difficulty, exam) => {
+        const filtered = questions.filter((question) => {
+            const matchesSearch = question.question.toLowerCase().includes(search.toLowerCase());
+            const matchesType = type ? question.questionType === type : true;
+            const matchesDifficulty = difficulty ? question.difficulty === difficulty : true;
+            const matchesExam = exam ? question.exam === exam : true;
+
+            return matchesSearch && matchesType && matchesDifficulty && matchesExam;
+        });
+        setFilteredQuestions(filtered);
+    };
 
     return (
         <div className="p-6 ">
@@ -256,22 +287,64 @@ const QuestionBank = () => {
                 </button>
             </form>
             <hr />
-            <div className="flex items-center justify-between w-full p-2">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full p-2">
                 {/* Questions heading */}
-                <div className="ml-4">
-                    <h2 className="text-xl font-bold mb-4">Questions :</h2>
+                <div className="ml-4 flex-grow">
+                    <h2 className="text-xl font-bold mb-4 md:mb-0">Questions :</h2>
                 </div>
-                {/* Search Section */}
-                <div className="flex flex-col justify-center w-1/3 ml-4">
-                    <input
-                        type="text"
-                        placeholder="Search questions by name..."
-                        value={searchQuery}
-                        onChange={handleSearchChange} // Use the appropriate search handler function
-                        className="border p-2 rounded border-blue-500"
-                    />
+
+                {/* filters */}
+                <div className="flex flex-col md:flex-row items-center justify-end w-full md:w-auto space-y-4 md:space-y-0 md:space-x-4">
+                    {/* Question Type Dropdown */}
+                    <select
+                        value={questionType}
+                        onChange={handleTypeChange}
+                        className="border p-1 rounded border-blue-500"
+                    >
+                        <option value="">All Types</option>
+                        <option value="multiple-choice">Multiple Choice</option>
+                        <option value="true-false">True/False</option>
+                    </select>
+
+                    {/* Difficulty Level Dropdown */}
+                    <select
+                        value={difficultyLevel}
+                        onChange={handleDifficultyChange}
+                        className="border p-1 rounded border-blue-500"
+                    >
+                        <option value="">All Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+
+                    {/* Exam Type Dropdown */}
+                    <select
+                        value={examType}
+                        onChange={handleExamChange}
+                        className="border p-1 rounded border-blue-500"
+                    >
+                        <option value="">All Exams</option>
+                        {exams && exams.map((exam) => (
+                            <option key={exam._id} value={exam.name} id={exam._id}>
+                                {exam.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* Search Section */}
+                    <div className="flex flex-col justify-center w-full md:w-1/3">
+                        <input
+                            type="text"
+                            placeholder="Search questions by name..."
+                            value={searchQuery}
+                            onChange={handleSearchChange} // Use the appropriate search handler function
+                            className="border p-1 rounded border-blue-500"
+                        />
+                    </div>
                 </div>
             </div>
+
             {/* question */}
             <QuestionTable
                 questions={filteredQuestions}
