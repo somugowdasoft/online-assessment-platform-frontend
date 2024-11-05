@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getStudentResult } from '../redux/actions/resultActions';
 import { FaSpinner } from "react-icons/fa";
+import GoBackButton from './GoBackButton';
 
 const StudentResult = () => {
   const { id } = useParams(); // Get the student ID from the URL
@@ -31,9 +32,13 @@ const StudentResult = () => {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <p className="text-red-600">{error}</p>
-      </div>
+      <>
+        <div className="flex justify-center items-center py-12">
+          {/* Check if the error has an 'error' field and display it */}
+          <p className="text-red-600">{error.error || "No results found for this user."}</p>
+        </div>
+        <div> <GoBackButton /></div>
+      </>
     );
   }
 
@@ -42,7 +47,7 @@ const StudentResult = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 mb-16">
       <h1 className="text-3xl font-bold mb-4 text-center">Results for {results?.user?.name}</h1>
 
       <div className="mb-6 p-4 border rounded-lg bg-gray-100 shadow-lg">
@@ -82,6 +87,7 @@ const StudentResult = () => {
 
         ))
       )}
+      <GoBackButton />
     </div>
 
   );
