@@ -176,7 +176,7 @@ const QuestionBank = () => {
 
                 <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="difficulty-select" className="block text-gray-700">
-                        Select Question Type
+                        Question Type:
                     </label>
                     <select
                         id="questionType"
@@ -185,7 +185,7 @@ const QuestionBank = () => {
                         value={formData.questionType}
                         className="mt-1 block w-full p-1 bg-white border border-blue-500 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">-- Select Question Type --</option>
+                        <option value="">Select Question Type</option>
                         <option value="multiple-choice">Multiple Choice</option>
                         <option value="true-false">True/False</option>
                     </select>
@@ -246,7 +246,7 @@ const QuestionBank = () => {
 
                 <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="difficulty-select" className="block text-gray-700">
-                        Select Difficulty Level:
+                        Difficulty Level:
                     </label>
                     <select
                         id="difficulty-select"
@@ -255,7 +255,7 @@ const QuestionBank = () => {
                         value={formData.difficulty}
                         className="mt-1 block w-full p-2 bg-white border border-blue-500 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">-- Select Difficulty Level --</option>
+                        <option value="">Select Difficulty Level</option>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
@@ -264,7 +264,7 @@ const QuestionBank = () => {
 
                 <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="exam-select" className="block text-gray-700">
-                        Select Exam:
+                        Exam:
                     </label>
                     <select
                         id="exam-select"
@@ -273,7 +273,7 @@ const QuestionBank = () => {
                         value={formData.exam}
                         className="mt-1 block w-full p-2 bg-white border border-blue-500 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">-- Select an Exam --</option>
+                        <option value="">Select an Exam</option>
                         {exams && exams.map((exam) => (
                             <option key={exam._id} value={exam.name} id={exam._id}>
                                 {exam.name}

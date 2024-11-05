@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createExam, deleteExam, getExams, updateExam } from '../redux/actions/examActions';
 import { ToastContainer } from 'react-toastify';
@@ -119,78 +119,110 @@ const ExamScheduling = () => {
 
                 {/* Row for Exam Name and Date */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-1/2 lg:w-1/2">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Exam Name"
-                        value={examData.name}
-                        onChange={handleChange}
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                        required
-                    />
-                    <input
-                        type="date"
-                        name="date"
-                        value={formatDateToInput(examData.date)}
-                        onChange={handleChange}
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                        required
-                    />
+                    <div>
+                        <label htmlFor="name" className="block text-gray-700">
+                            Exam:
+                        </label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="Enter Exam"
+                            value={examData.name}
+                            onChange={handleChange}
+                            className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="date" className="block text-gray-700">
+                            Date:
+                        </label>
+                        <input
+                            id="date"
+                            type="date"
+                            name="date"
+                            value={formatDateToInput(examData.date)}
+                            onChange={handleChange}
+                            className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
+                            required
+                        />
+                    </div>
                 </div>
 
                 {/* Row for Total Marks and Total Questions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:w-1/2 lg:w-1/2">
-                    <input
-                        type="number"
-                        name="totalMarks"
-                        id="totalMarks"
-                        placeholder="Total Marks"
-                        value={examData.totalMarks}
-                        onChange={handleChange}
-                        required
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                    />
-                    <input
-                        type="number"
-                        name="totalQuestions"
-                        id="totalQuestions"
-                        placeholder="Total Questions"
-                        value={examData.totalQuestions}
-                        onChange={handleChange}
-                        required
-                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
-                    />
+                    <div>
+                        <label htmlFor="totalMarks" className="block text-gray-700">
+                            Total Marks:
+                        </label>
+                        <input
+                            type="number"
+                            name="totalMarks"
+                            id="totalMarks"
+                            placeholder="Total Marks"
+                            value={examData.totalMarks}
+                            onChange={handleChange}
+                            required
+                            className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="totalQuestions" className="block text-gray-700">
+                            Total Questions:
+                        </label>
+                        <input
+                            type="number"
+                            name="totalQuestions"
+                            id="totalQuestions"
+                            placeholder="Total Questions"
+                            value={examData.totalQuestions}
+                            onChange={handleChange}
+                            required
+                            className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2"
+                        />
+                    </div>
                 </div>
 
                 {/* Row for Duration */}
-                <input
-                    type="number"
-                    name="duration"
-                    placeholder="Duration (minutes)"
-                    value={examData.duration}
-                    onChange={handleChange}
-                    className="border-2 border-blue-500 rounded w-full md:w-1/2 lg:w-1/2 focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-12 resize-none"
-                    required
-                />
+                <div className="w-full md:w-1/2 lg:w-1/2">
+                    <label htmlFor="duration" className="block text-gray-700">
+                        Duration:
+                    </label>
+                    <input
+                        id="duration"
+                        type="number"
+                        name="duration"
+                        placeholder="Duration (minutes)"
+                        value={examData.duration}
+                        onChange={handleChange}
+                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-12"
+                        required
+                    />
+                </div>
 
                 {/* Description Textarea */}
-                <textarea
-                    name="description"
-                    id="examDescription"
-                    placeholder="Description"
-                    value={examData.description}
-                    onChange={handleChange}
-                    required
-                    className="border-2 border-blue-500 rounded w-full md:w-1/2 lg:w-1/2 focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-12 resize-none"
-                />
-                {
-                    examId ? (
-                        <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Update Exam</button>
-                    ) : (
-                        <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">Schedule Exam</button>
-                    )
-                }
+                <div className="w-full md:w-1/2 lg:w-1/2">
+                    <label htmlFor="examDescription" className="block text-gray-700">
+                        Description:
+                    </label>
+                    <textarea
+                        name="description"
+                        id="examDescription"
+                        placeholder="Description"
+                        value={examData.description}
+                        onChange={handleChange}
+                        required
+                        className="border-2 border-blue-500 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 px-3 py-2 h-16 resize-none"
+                    />
+                </div>
+
+                {/* Submit Button */}
+                <button type="submit" className="rounded bg-blue-500 text-white p-2 w-full md:w-1/2 lg:w-1/2">
+                    {examId ? "Update Exam" : "Schedule Exam"}
+                </button>
             </form>
+
             <hr />
             <div className="flex items-center justify-between w-full mb-2 p-3">
                 {/* Exams heading */}
