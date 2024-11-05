@@ -11,7 +11,7 @@ const QuestionTable = ({ questions, isLoading, onEdit, onDelete }) => {
             ) : (
                 <>
                     {/* Make the table scrollable on small screens */}
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto mb-16">
                         <table className="min-w-full table-auto border-collapse bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead>
                                 <tr className="bg-blue-500 text-white text-sm">
