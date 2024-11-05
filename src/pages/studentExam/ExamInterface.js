@@ -49,7 +49,7 @@ const ExamInterface = () => {
             await dispatch(getExamById(id)); // Fetch exam by ID
             await initializeExam();          // Initialize exam
         } catch (error) {
-            // setError(error);
+            setError(error);
             console.error('Failed to fetch exams:', error);
         } finally {
             setLoading(false);  // Set loading to false once fetch is complete
