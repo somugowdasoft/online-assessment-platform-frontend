@@ -76,3 +76,23 @@ export const getStudentsActivity = () => async (dispatch) => {
         <ErrorHandler error={error} />
     }
 };
+
+export const createProctor = (proctorData) => async (dispatch) => {
+    try {
+        const { data } = await API.post('/proctor', proctorData);
+        dispatch({ type: 'CREATE_PROCTOR_INCIDENT', payload: data });
+    } catch (error) {
+        console.error(error);
+        <ErrorHandler error={error} />
+    }
+};
+
+export const getProctor = () => async (dispatch) => {
+    try {
+        const { data } = await API.get('/proctor');
+        dispatch({ type: 'GET_PROCTOR_INCIDENT', payload: data });
+    } catch (error) {
+        console.error(error);
+        <ErrorHandler error={error} />
+    }
+};

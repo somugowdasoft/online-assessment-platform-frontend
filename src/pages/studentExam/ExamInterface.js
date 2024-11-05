@@ -1,26 +1,24 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import axios from 'axios';
 import Webcam from 'react-webcam';
+import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getExamById } from '../../redux/actions/examActions';
 import GoBackButton from '../../components/GoBackButton';
 import { submitExam } from '../../redux/actions/submitExam';
-import { createStudentsActivity } from '../../redux/actions/studentActions';
+import { createProctor, createStudentsActivity } from '../../redux/actions/studentActions';
 
 const ExamInterface = () => {
-
     const dispatch = useDispatch();
     const hasFetchedExams = useRef(false);
 
-    const { id } = useParams();  // Get the exam ID from the URL
+    const { id } = useParams(); // Get the exam ID from the URL
     const { examDetails } = useSelector(state => state.exams);
     const { examData, questions } = examDetails;
     const { user } = useSelector((state) => state.auth);
 
     const [answers, setAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(null);
-    // const [isFullscreen, setIsFullscreen] = useState(false);
     const webcamRef = useRef(null);
     const [warningCount, setWarningCount] = useState(0);
     const [examStatus, setExamStatus] = useState('started'); // waiting, started, submitted
@@ -51,14 +49,13 @@ const ExamInterface = () => {
             await dispatch(getExamById(id)); // Fetch exam by ID
             await initializeExam();          // Initialize exam
         } catch (error) {
-            setError(error);
+            // setError(error);
             console.error('Failed to fetch exams:', error);
         } finally {
             setLoading(false);  // Set loading to false once fetch is complete
         }
     }, [dispatch, id, initializeExam]);
 
-    // Get exam data
     useEffect(() => {
         const fetchData = async () => {
             if (!hasFetchedExams.current) {
@@ -67,7 +64,31 @@ const ExamInterface = () => {
             }
         };
         fetchData();  // Call the async fetch function
-    }, [dispatch, fetchExams]); // Dependency array includes dispatch
+    }, [dispatch, fetchExams]);
+
+    const submitExams = useCallback(async () => {
+        try {
+            const submitData = {
+                examId: id,
+                answers,
+                warningCount,
+            }
+            await dispatch(submitExam(submitData));
+            let activityData = {
+                acivityType: "submitted exam",
+                examId: id,
+                exam: examData.name,
+                name: user.name,
+                email: user.email,
+                userId: user.id
+            }
+            await dispatch(createStudentsActivity(activityData));
+            setExamStatus('submitted');
+            document && document?.exitFullscreen();
+        } catch (error) {
+            console.error('Failed to submit exam:', error);
+        }
+    }, [warningCount, id, examData, user, answers, dispatch]);
 
     // Timer countdown
     useEffect(() => {
@@ -77,33 +98,41 @@ const ExamInterface = () => {
             }, 1000);
             return () => clearInterval(timer);
         } else if (timeLeft === 0) {
-            submitExam();
+            submitExams();
         }
-    }, [timeLeft, examStatus]);
+    }, [timeLeft, examStatus, submitExams]);
 
-    const handleSuspiciousActivity = useCallback(async () => {
+    const handleSuspiciousActivity = useCallback(async (type) => {
         try {
-            await axios.post('/api/proctor/incident', {
-                examId: id,
+            const proctorData = {
+                type: type,
                 timestamp: new Date(),
+                examId: id,
+                exam: examData.name,
+                name: user.name,
+                email: user.email,
+                userId: user.id
+            }
+            await dispatch(createProctor(proctorData))
+            toast.success(type);
+            await setWarningCount(prevWarningCount => {
+                const newWarningCount = prevWarningCount + 1;
+                if (newWarningCount >= 3) {
+                    submitExams();
+                }
+                return newWarningCount;
             });
 
-            setWarningCount(prev => prev + 1);
-            if (warningCount >= 3) {
-                submitExam();
-            }
         } catch (error) {
             console.error('Failed to report suspicious activity:', error);
         }
-    }, [id, warningCount]);
-
+    }, [id, examData, user, dispatch, submitExams]);
 
     // Monitor fullscreen
     useEffect(() => {
         const handleFullscreenChange = () => {
-            // setIsFullscreen(!!document.fullscreenElement);
             if (!document.fullscreenElement && examStatus === 'started') {
-                handleSuspiciousActivity('Left fullscreen mode');
+                handleSuspiciousActivity("Left fullscreen mode");  // Call suspicious activity handler if fullscreen is exited
             }
         };
 
@@ -113,16 +142,22 @@ const ExamInterface = () => {
 
     const sendActivityData = useCallback(async (screenshot) => {
         try {
-            await axios.post('/api/proctor/activity', {
-                examId: id,
+            const proctorData = {
+                type: 'suspicious',
                 screenshot,
                 timestamp: new Date(),
                 tabFocused: document.hasFocus(),
-            });
+                examId: id,
+                exam: examData.name,
+                name: user.name,
+                email: user.email,
+                userId: user.id
+            }
+            await dispatch(createProctor(proctorData))
         } catch (error) {
             console.error('Failed to send activity data:', error);
         }
-    }, [id]);
+    }, [id, dispatch, examData, user]);
 
     // Periodic screenshot and activity monitoring
     useEffect(() => {
@@ -159,37 +194,26 @@ const ExamInterface = () => {
         });
     };
 
-
-    const submitExams = async () => {
-        try {
-            const submitData = {
-                examId: id,
-                answers,
-                warningCount,
-            }
-            await dispatch(submitExam(submitData));
-            let activityData = {
-                acivityType: "submitted exam",
-                examId: id,
-                exam: examData.name,
-                name: user.name,
-                email: user.email,
-                userId: user.id
-            }
-            await dispatch(createStudentsActivity(activityData));
-            setExamStatus('submitted');
-            document && document?.exitFullscreen();
-        } catch (error) {
-            console.error('Failed to submit exam:', error);
+    const existFullscreen = () => {
+        if (document.fullscreenElement) { // Check if the document is in fullscreen mode
+            document.exitFullscreen()
+                .then(() => {
+                    console.log("Exited fullscreen mode successfully.");
+                })
+                .catch((err) => {
+                    console.error("Error exiting fullscreen mode:", err);
+                });
+        } else {
+            console.log("Not in fullscreen mode.");
         }
-    };
+    }
 
     // Show error message if there was a problem fetching the data
     if (error) {
         return (
             <div className="p-6 text-center">
                 <p className="text-red-500">{error}</p>
-                <GoBackButton />
+                <GoBackButton onClick={() => existFullscreen()} />
             </div>
         );
     }
@@ -276,8 +300,6 @@ const ExamInterface = () => {
                                         placeholder="Enter your answer here..."
                                     />
                                 )}
-
-
                             </div>
                         ))}
 
@@ -300,7 +322,7 @@ const ExamInterface = () => {
                     <GoBackButton path={"/student/dashboard/exams"} />
                 </div>
             )}
-
+            <ToastContainer />
         </div>
     );
 };

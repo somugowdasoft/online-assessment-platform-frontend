@@ -1,12 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
+import PropTypes from 'prop-types'; // Import PropTypes for validation
 
-const GoBackButton = ({path}) => {
+const GoBackButton = ({ path, onClick }) => {
     const navigate = useNavigate();
 
     const handleGoBack = () => {
-        navigate(path ? path : -1); // This navigates back to the previous page
+        // Navigate to the specified path or go back to the previous page
+        if (onClick) {
+            onClick();
+        } else {
+            navigate(path || -1); // Navigate back to the previous page
+        }
     };
 
     return (
@@ -18,6 +24,12 @@ const GoBackButton = ({path}) => {
             Go Back
         </button>
     );
+};
+
+// PropTypes validation
+GoBackButton.propTypes = {
+    path: PropTypes.string, // Optional string for path
+    onClick: PropTypes.func, // Optional function for custom onClick
 };
 
 export default GoBackButton;
