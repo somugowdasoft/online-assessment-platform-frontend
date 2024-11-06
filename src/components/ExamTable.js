@@ -30,8 +30,8 @@ const ExamTable = ({ exams, isLoading, onEdit, onDelete, onView }) => {
             ) : (
                 <>
                     {/* Make the table scrollable in small screens with overflow-x-auto */}
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full table-auto border-collapse bg-white border border-gray-300 rounded-lg shadow-md">
+                    <div className="overflow-x-auto shadow-lg">
+                        <table className="min-w-full table-auto border-collapse bg-white border border-gray-300 rounded-lg shadow-lg">
                             <thead>
                                 <tr className="bg-blue-500 text-white text-sm">
                                     <th className="px-4 py-2 truncate border">Sl No</th>

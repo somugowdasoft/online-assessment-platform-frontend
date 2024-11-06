@@ -9,8 +9,8 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
             ) : (
                 <>
                     {students && students.length > 0 ? (
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                        <div className="overflow-x-auto shadow-lg">
+                            <table className="min-w-full bg-white border border-gray-300 rounded-lg ">
                                 <thead className="overflow-x-auto">
                                     <tr className="bg-blue-500 text-white text-sm">
                                         <th className="py-2 px-4 border">SL No</th>

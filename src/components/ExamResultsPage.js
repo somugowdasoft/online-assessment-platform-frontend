@@ -41,7 +41,6 @@ const ExamResultsPage = ({ recentSubmissions, isLoading }) => {
                 const incorrectAnswersCount = totalQuestions - correctAnswersCount;
 
                 const scorePercentage = totalQuestions > 0 ? ((totalMarks / totalQuestions) * 100).toFixed(2) : 0;
-                console.log("correctAnswersCount___", correctAnswersCount, incorrectAnswersCount);
 
                 // Data for Doughnut Chart
                 const doughnutData = {
@@ -107,9 +106,10 @@ const ExamResultsPage = ({ recentSubmissions, isLoading }) => {
                                 <Bar data={barData} options={barOptions} width={200} height={100} />
                             </div>
                             {/* <Bar data={barData} options={barOptions} width={5} height={5} /> */}
-                            <table className="mt-4 w-full border">
+                            <table className="mt-4 w-full border shadow-lg">
                                 <thead className="bg-gray-100">
                                     <tr>
+                                        <th className="p-2 border">Sl No</th>
                                         <th className="p-2 border">Question</th>
                                         <th className="p-2 border">Your Answer</th>
                                         <th className="p-2 border">Correct Answer</th>
@@ -119,6 +119,7 @@ const ExamResultsPage = ({ recentSubmissions, isLoading }) => {
                                 <tbody>
                                     {questions.map((question, idx) => (
                                         <tr key={idx}>
+                                            <td className="p-2 border">{idx + 1}</td>
                                             <td className="p-2 border">{question.question}</td>
                                             <td className="p-2 border">{question.userAnswer}</td>
                                             <td className="p-2 border">{question.correctAnswer}</td>

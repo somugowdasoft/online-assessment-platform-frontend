@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const StatsCard = ({ title, value, icon: Icon, trend, bgColor }) => {
     return (
-        <div className={`${bgColor} p-6 rounded-lg shadow-md`}>
+        <div className={`${bgColor} p-6 rounded-lg shadow-lg`}>
             <div className="flex items-center justify-between">
                 <div>
                     <p className="text-black text-sm">{title}</p>
