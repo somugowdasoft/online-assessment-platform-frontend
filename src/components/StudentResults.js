@@ -54,9 +54,9 @@ const StudentResult = () => {
         <h2 className="text-xl font-semibold mb-2">Student Profile</h2>
         <p className="text-sm"><strong>Email:</strong> {results?.user?.email}</p>
         <p className="text-sm"><strong>Name:</strong> {results?.user?.name}</p>
-        <p className="text-sm"><strong>Gender:</strong> {results?.user?.profile.gender}</p>
-        <p className="text-sm"><strong>Date of Birth:</strong> {new Date(results?.user?.profile.dob).toLocaleDateString()}</p>
-        <p className="text-sm"><strong>Address:</strong> {results?.user?.profile.address}</p>
+        <p className="text-sm"><strong>Gender:</strong> {results?.user?.profile?.gender ? results?.user?.profile?.gender : "-"}</p>
+        <p className="text-sm"><strong>Date of Birth:</strong> {results?.user?.profile?.dob ? new Date(results?.user?.profile?.dob).toLocaleDateString() : "-"}</p>
+        <p className="text-sm"><strong>Address:</strong> {results?.user?.profile?.address ? results?.user?.profile?.address : "-"}</p>
       </div>
 
       <hr className="my-4" />

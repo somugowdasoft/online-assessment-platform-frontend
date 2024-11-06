@@ -171,12 +171,12 @@ const QuestionBank = () => {
                     onChange={handleChange}
                     placeholder="Question"
                     required
-                    className="border p-2 mb-4 w-1/2 border-blue-500 rounded"
+                    className="border p-2 mb-4 w-3/4 md:w-1/2 lg:w-1/2 border-blue-500 rounded"
                 />
 
-                <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
+                <div className="mb-4 w-3/4 sm: w-3/4 md:w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="difficulty-select" className="block text-gray-700">
-                        Question Type:
+                        Type:
                     </label>
                     <select
                         id="questionType"
@@ -185,7 +185,7 @@ const QuestionBank = () => {
                         value={formData.questionType}
                         className="mt-1 block w-full p-1 bg-white border border-blue-500 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">Select Question Type</option>
+                        <option value="">Question Type</option>
                         <option value="multiple-choice">Multiple Choice</option>
                         <option value="true-false">True/False</option>
                     </select>
@@ -193,7 +193,7 @@ const QuestionBank = () => {
 
                 {formData.questionType === 'multiple-choice' && (
                     <>
-                        <div className="flex flex-wrap mb-4 w-1/2">
+                        <div className="flex flex-wrap mb-4 w-3/4 sm:w-3/4 md:w-1/2 lg:w-1/2">
                             {formData.options.map((option, index) => (
                                 <input
                                     key={index}
@@ -244,9 +244,9 @@ const QuestionBank = () => {
                     </div>
                 )}
 
-                <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
+                <div className="mb-4 w-3/4 sm:w-3/4 md:w-1/2 lg:w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="difficulty-select" className="block text-gray-700">
-                        Difficulty Level:
+                        Level:
                     </label>
                     <select
                         id="difficulty-select"
@@ -255,14 +255,14 @@ const QuestionBank = () => {
                         value={formData.difficulty}
                         className="mt-1 block w-full p-2 bg-white border border-blue-500 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">Select Difficulty Level</option>
+                        <option value="">Difficulty Level</option>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
                     </select>
                 </div>
 
-                <div className="mb-4 w-1/2"> {/* Set the width to match the input */}
+                <div className="mb-4 w-3/4 sm:w-3/4 md:w-1/2 lg:w-1/2"> {/* Set the width to match the input */}
                     <label htmlFor="exam-select" className="block text-gray-700">
                         Exam:
                     </label>
@@ -282,7 +282,7 @@ const QuestionBank = () => {
                     </select>
                 </div>
 
-                <button type="submit" className="bg-blue-500 rounded text-white p-2 w-1/2">
+                <button type="submit" className="bg-blue-500 rounded text-white p-2 w-3/4 sm:w-3/4 md:w-1/2 lg:w-1/2">
                     {editing ? 'Update' : 'Add'} Question
                 </button>
             </form>
@@ -299,7 +299,7 @@ const QuestionBank = () => {
                     <select
                         value={questionType}
                         onChange={handleTypeChange}
-                        className="border p-1 rounded border-blue-500"
+                        className="border p-1 rounded border-blue-500 w-3/4"
                     >
                         <option value="">All Types</option>
                         <option value="multiple-choice">Multiple Choice</option>
@@ -310,7 +310,7 @@ const QuestionBank = () => {
                     <select
                         value={difficultyLevel}
                         onChange={handleDifficultyChange}
-                        className="border p-1 rounded border-blue-500"
+                        className="border p-1 rounded border-blue-500 w-3/4"
                     >
                         <option value="">All Difficulty</option>
                         <option value="easy">Easy</option>
@@ -322,7 +322,7 @@ const QuestionBank = () => {
                     <select
                         value={examType}
                         onChange={handleExamChange}
-                        className="border p-1 rounded border-blue-500"
+                        className="border p-1 rounded border-blue-500 w-3/4"
                     >
                         <option value="">All Exams</option>
                         {exams && exams.map((exam) => (
@@ -333,7 +333,7 @@ const QuestionBank = () => {
                     </select>
 
                     {/* Search Section */}
-                    <div className="flex flex-col justify-center w-full md:w-1/3">
+                    <div className="flex flex-col justify-center w-3/4 md:w-1/3">
                         <input
                             type="text"
                             placeholder="Search questions by name..."

@@ -87,9 +87,9 @@ export const createProctor = (proctorData) => async (dispatch) => {
     }
 };
 
-export const getProctor = () => async (dispatch) => {
+export const getProctor = (userId) => async (dispatch) => {
     try {
-        const { data } = await API.get('/proctor');
+        const { data } = await API.get(`/proctor/${userId}`);
         dispatch({ type: 'GET_PROCTOR_INCIDENT', payload: data });
     } catch (error) {
         console.error(error);
