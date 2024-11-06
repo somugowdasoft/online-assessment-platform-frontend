@@ -1,11 +1,14 @@
-import { FaEye, FaTrash } from "react-icons/fa";
+import { FaEye, FaSpinner, FaTrash, FaLock, FaLockOpen } from "react-icons/fa";
 
 const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView }) => {
 
     return (
         <div className="container p-4 max-w-full overflow-x-auto">
             {isLoading ? (
-                <p className="text-center text-gray-500">Loading ..........</p>
+                <div className="text-center">
+                    <FaSpinner className="animate-spin text-gray-500" size={24} /> {/* Spinner icon */}
+                    <p className="text-gray-500">Loading...</p>
+                </div>
             ) : (
                 <>
                     {students && students.length > 0 ? (
@@ -30,11 +33,21 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
                                             <td className="px-4 py-2 border text-center">
                                                 <button
                                                     onClick={() => togglePermission(student._id, student.examPermission)}
-                                                    className={`px-2 py-1 rounded ${student.examPermission ? 'bg-green-500' : 'bg-red-500'
+                                                    className={`px-2 py-1 w-1/2 rounded ${student.examPermission ? 'bg-green-500' : 'bg-red-500'
                                                         } text-white`}
                                                     aria-label="Edit"
                                                 >
-                                                    {student.examPermission ? 'Allowed' : 'Not Allowed'}
+                                                    {student.examPermission ? (
+                                                        <>
+                                                            <FaLockOpen className="inline-block mr-1" />
+                                                            Allowed
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FaLock className="inline-block mr-1" />
+                                                            Not Allowed
+                                                        </>
+                                                    )}
                                                 </button>
                                             </td>
                                             <td className="px-4 py-2 border text-center">

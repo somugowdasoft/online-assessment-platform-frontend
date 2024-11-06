@@ -48,7 +48,8 @@ export const deleteStudent = (id) => async (dispatch) => {
 
 export const updateExamPermission = (id, permission) => async (dispatch) => {
     try {
-        await API.put(`/students/permission/${id}`, { examPermission: permission });
+        const { data } = await API.put(`/permission/${id}`, { examPermission: permission });
+        toast.success(data?.message || 'Permission updated successfully');
         dispatch({ type: 'UPDATE_EXAM_PERMISSION', payload: { id, permission } });
     } catch (error) {
         console.error(error);

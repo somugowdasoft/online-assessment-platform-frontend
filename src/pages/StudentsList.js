@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllStudents, deleteStudent, updateExamPermission } from '../redux/actions/studentActions';
 import StudentTable from '../components/StudentsTable';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const StudentsList = () => {
     const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const StudentsList = () => {
                 onView={(id) => handleView(id)}
                 onDelete={(id) => handleDelete(id)}
             />
+            <ToastContainer />
         </div>
     );
 };
