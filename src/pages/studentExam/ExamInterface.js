@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
+import html2canvas from 'html2canvas';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getExamById } from '../../redux/actions/examActions';
 import GoBackButton from '../../components/GoBackButton';
 import { submitExam } from '../../redux/actions/submitExam';
@@ -10,6 +11,7 @@ import { createProctor, createStudentsActivity } from '../../redux/actions/stude
 
 const ExamInterface = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const hasFetchedExams = useRef(false);
 
     const { id } = useParams(); // Get the exam ID from the URL
@@ -84,7 +86,7 @@ const ExamInterface = () => {
             }
             await dispatch(createStudentsActivity(activityData));
             setExamStatus('submitted');
-            document && document?.exitFullscreen();
+            document.exitFullscreen();
         } catch (error) {
             console.error('Failed to submit exam:', error);
         }
@@ -162,10 +164,15 @@ const ExamInterface = () => {
     // Periodic screenshot and activity monitoring
     useEffect(() => {
         if (examStatus === 'started') {
-            const monitoring = setInterval(() => {
-                if (webcamRef.current) {
-                    const screenshot = webcamRef.current.getScreenshot();
-                    sendActivityData(screenshot);
+            const monitoring = setInterval(async () => {
+                // Capture the full window screenshot using html2canvas
+                const fullWindowScreenshot = await html2canvas(document.body)
+                    .then(canvas => canvas.toDataURL("image/png")) // Convert the canvas to a data URL (image)
+                    .catch(error => console.error("Error capturing screenshot:", error));
+
+                if (fullWindowScreenshot) {
+                    // Send the captured screenshot to the server
+                    sendActivityData(fullWindowScreenshot);
                 }
             }, 30000); // Every 30 seconds
 
@@ -194,7 +201,7 @@ const ExamInterface = () => {
         });
     };
 
-    const existFullscreen = () => {
+    const existFullscreen = useCallback(() => {
         if (document.fullscreenElement) { // Check if the document is in fullscreen mode
             document.exitFullscreen()
                 .then(() => {
@@ -203,10 +210,12 @@ const ExamInterface = () => {
                 .catch((err) => {
                     console.error("Error exiting fullscreen mode:", err);
                 });
+            navigate(-1);
         } else {
             console.log("Not in fullscreen mode.");
+            navigate(-1); // Navigate back
         }
-    }
+    }, [navigate]);
 
     // Show error message if there was a problem fetching the data
     if (error) {
@@ -239,7 +248,7 @@ const ExamInterface = () => {
                         </div>
                     </div>
 
-                    <div className="fixed top-4 left-4 w-48">
+                    <div className="fixed top-4 left-4 w-48 opacity-0 pointer-events-none">
                         <Webcam
                             ref={webcamRef}
                             audio={false}

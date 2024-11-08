@@ -1,7 +1,8 @@
 const initialState = {
     students: [],
     activity: [],
-    proctor: []
+    proctor: [],
+    error: null
 };
 
 //students reducer
@@ -38,6 +39,11 @@ export const studentReducer = (state = initialState, action) => {
                 ...state,
                 proctor: action.payload
             };
+        case "GET_PROCTOR_ERROR":
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return state;
     }

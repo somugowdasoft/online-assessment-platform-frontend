@@ -33,19 +33,17 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
                                             <td className="px-4 py-2 border text-center">
                                                 <button
                                                     onClick={() => togglePermission(student._id, student.examPermission)}
-                                                    className={`px-2 py-1 w-1/2 rounded ${student.examPermission ? 'bg-green-500' : 'bg-red-500'
+                                                    className={`px-2 py-1 w-1/2 rounded ${!student.examPermission ? 'bg-green-500' : 'bg-red-500'
                                                         } text-white`}
                                                     aria-label="Edit"
                                                 >
                                                     {student.examPermission ? (
                                                         <>
-                                                            <FaLockOpen className="inline-block mr-1" />
-                                                            Allowed
+                                                            <FaLock className="mx-auto text-lg" />
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <FaLock className="inline-block mr-1" />
-                                                            Not Allowed
+                                                            <FaLockOpen className="mx-auto text-lg" />
                                                         </>
                                                     )}
                                                 </button>

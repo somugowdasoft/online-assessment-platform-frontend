@@ -8,6 +8,7 @@ const Sidebar = (props) => {
     const { isAuthenticated, user } = useSelector((state) => state.auth);
     const [isAdmin, setIsAdmin] = useState(false);
 
+    // Check if user is admin
     useEffect(() => {
         if (user && user.role === "admin") {
             setIsAdmin(true);
@@ -18,7 +19,7 @@ const Sidebar = (props) => {
 
     return (
         <aside
-            className={`w-[15%] float-left  ${isOpen ? 'block' : 'hidden'} lg:block`}
+            className={`w-[15%] float-left ${isOpen ? 'block' : 'hidden'} lg:block`}
         >
             <div
                 className={`fixed left-0 h-full bg-gradient-to-r from-blue-500 to-purple-600 text-white transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'
@@ -46,9 +47,9 @@ const Sidebar = (props) => {
                             </>
                         ) : (
                             <>
-                              <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
-                              <NavItem icon={<FaChartLine />} name="Results" path="results" />
-                            </>               
+                                <NavItem icon={<FaCalendarDay />} name="Exams" path="exams" />
+                                <NavItem icon={<FaChartLine />} name="Results" path="results" />
+                            </>
                         )}
                     </nav>
                 </div>
