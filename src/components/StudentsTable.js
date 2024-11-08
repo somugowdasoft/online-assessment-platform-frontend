@@ -1,6 +1,6 @@
 import { FaEye, FaSpinner, FaTrash, FaLock, FaLockOpen } from "react-icons/fa";
 
-const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView }) => {
+const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView, onRoleChange }) => {
 
     return (
         <div className="container p-4 max-w-full overflow-x-auto">
@@ -20,6 +20,7 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
                                         <th className="py-2 px-4 border">Name</th>
                                         <th className="py-2 px-4 border">Email</th>
                                         <th className="py-2 px-4 border">Exam Permission</th>
+                                        <th className="py-2 px-4 border">Role</th>
                                         <th className="py-2 px-4 border">View Result</th>
                                         <th className="py-2 px-4 border">Actions</th>
                                     </tr>
@@ -49,6 +50,16 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
                                                 </button>
                                             </td>
                                             <td className="px-4 py-2 border text-center">
+                                                <select
+                                                    value={student.role}  // Assuming `question.role` contains the current role
+                                                    onChange={(e) => onRoleChange(e, student._id)} // Function to handle role change
+                                                    className="border border-gray-300 rounded p-1"
+                                                >
+                                                    <option value="student">Student</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </td>
+                                            <td className="px-4 py-2 border text-center">
                                                 <button
                                                     onClick={() => onView(student._id)}
                                                     className="text-blue-500 hover:text-blue-700 mr-3"
@@ -74,6 +85,11 @@ const StudentTable = ({ students, isLoading, togglePermission, onDelete, onView 
                     ) : (
                         <p className="text-center text-gray-500">No students added yet</p>
                     )}
+
+                    {/* Note Section */}
+                    <p className="text-sm text-gray-500 mt-4">
+                        <strong>Note:</strong> This table only lists students. If you change a student's role to admin, they will no longer appear in this list.
+                    </p>
                 </>
             )
             }

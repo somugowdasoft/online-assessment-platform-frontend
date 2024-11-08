@@ -19,6 +19,15 @@ export const studentReducer = (state = initialState, action) => {
                     student._id === action.payload.id ? { ...student, examPermission: action.payload.permission } : student
                 ),
             };
+        case 'UPDATE_ROLE':
+            return {
+                ...state,
+                students: state.students.map((student) =>
+                    student._id === action.payload.id
+                        ? { ...student, role: action.payload.role }
+                        : student
+                ),
+            };
         case "CREATE_STUDENTS_ACTIVITY":
             return {
                 ...state,
@@ -44,6 +53,8 @@ export const studentReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload
             }
+        case 'UPDATE_ROLE_ERROR':
+            return { ...state, error: action.payload };
         default:
             return state;
     }

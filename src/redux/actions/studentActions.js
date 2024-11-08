@@ -4,7 +4,7 @@ import ErrorHandler from '../../components/ErrorHandler';
 
 // Base configuration for Axios
 const API = axios.create({
-    baseURL: process.env.BACKEND_URL || 'https://online-assessment-platform-backend-cmgj.onrender.com/api/students'  // Replace with your backend API URL
+    baseURL: process.env.BACKEND_URL || 'http://localhost:5000/api/students'  // Replace with your backend API URL
 });
 
 // Add a request interceptor
@@ -96,6 +96,21 @@ export const getProctor = (id) => async (dispatch) => {
         });
     } catch (error) {
         dispatch({ type: 'GET_PROCTOR_ERROR', payload: error.response.data });
+        console.error(error);
+        <ErrorHandler error={error} />
+    }
+};
+
+//handle role chnage
+export const updateRole = (role, id) => async (dispatch) => {
+    try {
+        const response = await API.put(`/role/${id}`, role);
+        toast.success(response?.message || 'Role updated successfully');
+        dispatch({
+            type: 'UPDATE_ROLE', payload: { id, role: role.role } // Dispatch the updated role
+        });
+    } catch (error) {
+        dispatch({ type: 'UPDATE_ROLE_ERROR', payload: error.response });
         console.error(error);
         <ErrorHandler error={error} />
     }
