@@ -94,7 +94,7 @@ const QuestionBank = () => {
     };
 
     // Handle submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         if (editing) {
@@ -102,8 +102,9 @@ const QuestionBank = () => {
             dispatch(getQuestions());
             setEditing(null);
         } else {
-            dispatch(createQuestion(formData));
-            dispatch(getQuestions());
+            await dispatch(createQuestion(formData)).then(async () => {
+                await dispatch(getQuestions());
+            });
         }
         setFormData({ question: '', options: ['', '', '', ''], correctAnswer: '', difficulty: '', exam: '', questionType: '', examId: "" });
         setIsLoading(false);
